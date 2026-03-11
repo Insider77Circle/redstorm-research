@@ -17,8 +17,8 @@
     --bg2: #07090d;
     --surface: rgba(255,10,46,0.04);
     --border: rgba(255,10,46,0.2);
-    --text: #c8d0d8;
-    --text-dim: #5a6470;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
     --mono: 'Share Tech Mono', monospace;
     --head: 'Orbitron', sans-serif;
     --body: 'Rajdhani', sans-serif;
@@ -209,13 +209,13 @@
 
   .hero-sub {
     font-family: var(--body);
-    font-size: clamp(1.25rem, 2.2vw, 1.65rem);
-    font-weight: 300;
+    font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+    font-weight: 400;
     color: var(--text-dim);
     max-width: 700px;
     margin: 2rem auto 3rem;
-    line-height: 1.7;
-    letter-spacing: 0.03em;
+    line-height: 1.75;
+    letter-spacing: 0.02em;
   }
 
   .hero-sub strong { color: var(--text); font-weight: 600; }
@@ -320,17 +320,18 @@
     font-family: var(--head);
     font-size: clamp(2.2rem, 3.5vw, 3.5rem);
     font-weight: 700;
-    color: var(--text);
+    color: #ffffff;
     line-height: 1.1;
-    max-width: 600px;
+    max-width: 620px;
     margin-bottom: 1.5rem;
   }
 
   .section-desc {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
+    font-weight: 400;
     color: var(--text-dim);
-    max-width: 540px;
-    line-height: 1.75;
+    max-width: 560px;
+    line-height: 1.8;
   }
 
   .capabilities-grid {
@@ -377,12 +378,12 @@
     font-family: var(--head);
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--text);
+    color: #ffffff;
     letter-spacing: 0.05em;
     margin-bottom: 1rem;
   }
 
-  .cap-desc { font-size: 1.05rem; color: var(--text-dim); line-height: 1.7; }
+  .cap-desc { font-size: 1.1rem; font-weight: 400; color: var(--text-dim); line-height: 1.75; }
 
   .cap-tags { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
@@ -430,7 +431,7 @@
     margin-bottom: 0.5rem;
   }
 
-  .step-desc { font-size: 1.05rem; color: var(--text-dim); line-height: 1.7; }
+  .step-desc { font-size: 1.1rem; font-weight: 400; color: var(--text-dim); line-height: 1.75; }
 
   .terminal {
     background: #020305;
@@ -495,11 +496,11 @@
   .seg-card:hover { border-color: rgba(255,10,46,0.5); box-shadow: 0 0 30px rgba(255,10,46,0.08); }
 
   .seg-label { font-family: var(--mono); font-size: 0.8rem; color: var(--red); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; }
-  .seg-title { font-family: var(--head); font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 1.2rem; }
+  .seg-title { font-family: var(--head); font-size: 1.4rem; font-weight: 700; color: #ffffff; margin-bottom: 1.2rem; }
 
   .seg-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
 
-  .seg-list li { font-size: 1rem; color: var(--text-dim); padding-left: 1.2rem; position: relative; }
+  .seg-list li { font-size: 1.05rem; font-weight: 400; color: var(--text-dim); padding-left: 1.2rem; position: relative; }
   .seg-list li::before { content: '›'; position: absolute; left: 0; color: var(--red); }
 
   .contact-section { background: var(--bg2); border-top: 1px solid var(--border); }

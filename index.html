@@ -821,18 +821,20 @@
       </div>
     </div>
     <div>
-      <form class="inquiry-form" id="inquiryForm">
+      <form class="inquiry-form" id="inquiryForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="a6744c7a-bd5c-4f4c-8ed7-0efdc78a30cf">
+        <input type="hidden" name="subject" value="New REDSTORM Research Brief">
         <div class="form-row">
-          <div class="field"><label for="fname">First Name</label><input type="text" id="fname" placeholder="Jane" required></div>
-          <div class="field"><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Smith" required></div>
+          <div class="field"><label for="fname">First Name</label><input type="text" id="fname" name="first_name" placeholder="Jane" required></div>
+          <div class="field"><label for="lname">Last Name</label><input type="text" id="lname" name="last_name" placeholder="Smith" required></div>
         </div>
         <div class="form-row">
-          <div class="field"><label for="email">Email Address</label><input type="email" id="email" placeholder="jane@company.com" required></div>
-          <div class="field"><label for="company">Company / Organization</label><input type="text" id="company" placeholder="Acme Security Inc."></div>
+          <div class="field"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="jane@company.com" required></div>
+          <div class="field"><label for="company">Company / Organization</label><input type="text" id="company" name="company" placeholder="Acme Security Inc."></div>
         </div>
         <div class="field">
           <label for="segment">Client Segment</label>
-          <select id="segment" required>
+          <select id="segment" name="segment" required>
             <option value="" disabled selected>Select your sector...</option>
             <option>Cybersecurity Company</option>
             <option>AI Company / Startup</option>
@@ -843,7 +845,7 @@
         </div>
         <div class="field">
           <label for="scope">Research Scope / Objective</label>
-          <textarea id="scope" placeholder="Describe what you need researched. The more specific, the better the output — target, domain, questions, known constraints..." required></textarea>
+          <textarea id="scope" name="message" placeholder="Describe what you need researched. The more specific, the better the output — target, domain, questions, known constraints..." required></textarea>
         </div>
         <button type="submit" class="form-submit">TRANSMIT RESEARCH BRIEF →</button>
         <p class="form-note">// All briefs are handled confidentially. No data shared with third parties.</p>
@@ -863,10 +865,23 @@
 </footer>
 
 <script>
-  document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+  document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    this.style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+    const form = this;
+    const btn = form.querySelector('.form-submit');
+    btn.textContent = 'TRANSMITTING...';
+    btn.disabled = true;
+    const data = new FormData(form);
+    const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+    const json = await res.json();
+    if (json.success) {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      btn.textContent = 'TRANSMIT RESEARCH BRIEF →';
+      btn.disabled = false;
+      alert('Submission failed. Please try again.');
+    }
   });
 
   const observer = new IntersectionObserver((entries) => {

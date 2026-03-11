@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REDSTORM RESEARCH — AI Intelligence Systems</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #ff0a2e;
+    --red-dim: #8b0015;
+    --red-glow: rgba(255,10,46,0.35);
+    --cyan: #00ffe7;
+    --cyan-dim: #00897b;
+    --cyan-glow: rgba(0,255,231,0.25);
+    --bg: #040608;
+    --bg2: #07090d;
+    --surface: rgba(255,10,46,0.04);
+    --border: rgba(255,10,46,0.2);
+    --text: #c8d0d8;
+    --text-dim: #5a6470;
+    --mono: 'Share Tech Mono', monospace;
+    --head: 'Orbitron', sans-serif;
+    --body: 'Rajdhani', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,10,46,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,10,46,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  section, nav, footer { position: relative; z-index: 2; }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    background: rgba(4,6,8,0.85);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: var(--head);
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 20px var(--red-glow);
+  }
+
+  .nav-logo span { color: var(--text-dim); font-weight: 400; }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cyan); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--red);
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+  }
+
+  .nav-cta:hover::before { transform: translateX(0); }
+  .nav-cta:hover { color: var(--bg); }
+  .nav-cta span { position: relative; z-index: 1; }
+
+  /* HERO — fully centered, big text */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(ellipse, rgba(255,10,46,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--cyan);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .hero-title {
+    font-family: var(--head);
+    font-weight: 900;
+    font-size: clamp(4.5rem, 12vw, 10rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.2rem;
+  }
+
+  .hero-title .line1 {
+    color: var(--red);
+    text-shadow: 0 0 40px var(--red-glow), 0 0 80px rgba(255,10,46,0.15);
+    display: block;
+    animation: glitch 8s infinite;
+  }
+
+  .hero-title .line2 {
+    color: var(--text);
+    display: block;
+    opacity: 0.9;
+  }
+
+  @keyframes glitch {
+    0%, 92%, 100% { transform: none; text-shadow: 0 0 40px var(--red-glow), 0 0 80px rgba(255,10,46,0.15); }
+    93% { transform: translate(-3px, 0) skewX(-1deg); text-shadow: 3px 0 var(--cyan), -3px 0 var(--red); }
+    94% { transform: translate(3px, 0) skewX(1deg); text-shadow: -3px 0 var(--cyan), 3px 0 var(--red); }
+    95% { transform: none; text-shadow: 0 0 40px var(--red-glow); }
+    96% { transform: translate(-2px, 1px); text-shadow: 2px 0 var(--cyan); }
+    97% { transform: none; text-shadow: 0 0 40px var(--red-glow), 0 0 80px rgba(255,10,46,0.15); }
+  }
+
+  .hero-sub {
+    font-family: var(--body);
+    font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+    font-weight: 300;
+    color: var(--text-dim);
+    max-width: 700px;
+    margin: 2rem auto 3rem;
+    line-height: 1.7;
+    letter-spacing: 0.03em;
+  }
+
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+
+  .hero-actions {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    font-family: var(--mono);
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--red);
+    border: none;
+    padding: 1.1rem 2.8rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 0 30px var(--red-glow);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 50px rgba(255,10,46,0.6);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    font-family: var(--mono);
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    background: transparent;
+    border: 1px solid rgba(0,255,231,0.3);
+    padding: 1.1rem 2.8rem;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px var(--cyan-glow);
+  }
+
+  .stats-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat { padding: 2rem 4rem; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--head);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--red);
+    text-shadow: 0 0 20px var(--red-glow);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  .section { padding: 7rem 4rem; }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    max-width: 3rem;
+    height: 1px;
+    background: var(--red-dim);
+  }
+
+  .section-title {
+    font-family: var(--head);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-desc {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    max-width: 540px;
+    line-height: 1.75;
+  }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 4rem;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .cap-card {
+    background: var(--bg2);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .cap-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .cap-card:hover { background: rgba(255,10,46,0.03); }
+  .cap-card:hover::before { transform: scaleX(1); }
+
+  .cap-icon {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .cap-title {
+    font-family: var(--head);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .cap-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+
+  .cap-tags { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--cyan-dim);
+    border: 1px solid rgba(0,255,231,0.15);
+    padding: 0.2rem 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .how-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .how-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+
+  .steps { margin-top: 3rem; display: flex; flex-direction: column; gap: 0; }
+
+  .step { display: flex; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: var(--head);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--red-dim);
+    opacity: 0.4;
+    line-height: 1;
+    min-width: 3rem;
+    transition: all 0.3s;
+  }
+
+  .step:hover .step-num { color: var(--red); opacity: 1; text-shadow: 0 0 20px var(--red-glow); }
+
+  .step-title {
+    font-family: var(--head);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+
+  .terminal {
+    background: #020305;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.8;
+    position: relative;
+  }
+
+  .terminal::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, var(--red-dim), transparent 50%);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,10,46,0.1);
+  }
+
+  .t-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .t-dot:nth-child(1) { background: #ff5f56; }
+  .t-dot:nth-child(2) { background: #ffbd2e; }
+  .t-dot:nth-child(3) { background: #27c93f; }
+  .t-title { color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.1em; margin-left: auto; }
+
+  .t-line { color: var(--text-dim); display: block; }
+  .t-line .prompt { color: var(--red); }
+  .t-line .cmd { color: var(--text); }
+  .t-line .out { color: var(--cyan); }
+  .t-line .dim { color: #2a3040; }
+  .t-line .warn { color: #ff9800; }
+
+  .cursor {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--red);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  .segments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+
+  .seg-card {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    background: var(--surface);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .seg-card:hover { border-color: rgba(255,10,46,0.5); box-shadow: 0 0 30px rgba(255,10,46,0.08); }
+
+  .seg-label { font-family: var(--mono); font-size: 0.6rem; color: var(--red); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; }
+  .seg-title { font-family: var(--head); font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 1.2rem; }
+
+  .seg-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .seg-list li { font-size: 0.85rem; color: var(--text-dim); padding-left: 1.2rem; position: relative; }
+  .seg-list li::before { content: '›'; position: absolute; left: 0; color: var(--red); }
+
+  .contact-section { background: var(--bg2); border-top: 1px solid var(--border); }
+
+  .contact-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; }
+
+  .contact-info { padding-top: 1rem; }
+
+  .contact-detail { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .c-item { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .c-label { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.2em; text-transform: uppercase; }
+  .c-value { font-family: var(--mono); font-size: 0.8rem; color: var(--cyan); }
+
+  .inquiry-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .field label { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.2em; text-transform: uppercase; }
+
+  .field input, .field select, .field textarea {
+    background: rgba(255,10,46,0.03);
+    border: 1px solid rgba(255,10,46,0.2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    padding: 0.8rem 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .field input::placeholder, .field textarea::placeholder { color: rgba(90,100,112,0.5); }
+
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 15px rgba(255,10,46,0.1);
+  }
+
+  .field select option { background: var(--bg2); color: var(--text); }
+  .field textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+
+  .form-submit {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--red);
+    border: none;
+    padding: 1.1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.25s;
+    box-shadow: 0 0 25px var(--red-glow);
+  }
+
+  .form-submit:hover { box-shadow: 0 0 45px rgba(255,10,46,0.55); transform: translateY(-1px); }
+
+  .form-note { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); text-align: center; letter-spacing: 0.1em; }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 3rem;
+    border: 1px solid rgba(0,255,231,0.2);
+    background: rgba(0,255,231,0.03);
+  }
+
+  .form-success .success-icon { font-family: var(--head); font-size: 2rem; color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); margin-bottom: 1rem; display: block; }
+  .form-success p { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); line-height: 1.8; }
+
+  footer {
+    padding: 2.5rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo { font-family: var(--head); font-weight: 900; font-size: 0.9rem; color: var(--red); letter-spacing: 0.2em; text-shadow: 0 0 15px var(--red-glow); }
+  .footer-copy { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.1em; }
+  .footer-status { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.5rem; letter-spacing: 0.1em; }
+
+  .status-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #27c93f;
+    box-shadow: 0 0 6px #27c93f;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.7s forwards; }
+  .fade-up:nth-child(2) { animation-delay: 0.1s; }
+  .fade-up:nth-child(3) { animation-delay: 0.2s; }
+  .fade-up:nth-child(4) { animation-delay: 0.3s; }
+
+  @keyframes fadeUp { to { opacity: 1; transform: none; } }
+
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--red-dim), transparent); margin: 0 4rem; opacity: 0.4; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .section { padding: 4rem 1.5rem; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .capabilities-grid { grid-template-columns: 1fr; }
+    .how-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .segments { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .divider { margin: 0 1.5rem; }
+    .stat { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="noise"></div>
+
+<nav>
+  <div class="nav-logo">REDSTORM<span> // RESEARCH</span></div>
+  <ul class="nav-links">
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#how">Process</a></li>
+    <li><a href="#segments">Who We Serve</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta"><span>Request Brief</span></a>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow fade-up">Proprietary AI Research System</div>
+  <h1 class="hero-title fade-up">
+    <span class="line1">REDSTORM</span>
+    <span class="line2">RESEARCH</span>
+  </h1>
+  <p class="hero-sub fade-up">
+    One system. Any research domain. <strong>Delivered as intelligence.</strong><br>
+    Cross-domain AI synthesis for cybersecurity, AI companies, and business — OSINT, market intel, threat research, and technical analysis in a single engagement.
+  </p>
+  <div class="hero-actions fade-up">
+    <a href="#contact" class="btn-primary">Submit a Research Brief</a>
+    <a href="#how" class="btn-secondary">See How It Works</a>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Domain Coverage</span></div>
+  <div class="stat"><span class="stat-num">01</span><span class="stat-label">Unified System</span></div>
+  <div class="stat"><span class="stat-num">72H</span><span class="stat-label">Avg Report Delivery</span></div>
+  <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Proprietary Stack</span></div>
+</div>
+
+<section class="section" id="capabilities">
+  <div class="section-tag">Core Capabilities</div>
+  <h2 class="section-title">What REDSTORM Sees That Others Miss</h2>
+  <p class="section-desc">Traditional analysts are siloed by domain. REDSTORM synthesizes across all of them simultaneously — connecting signals that specialized researchers never see together.</p>
+  <div class="capabilities-grid">
+    <div class="cap-card">
+      <span class="cap-icon">// 01 — OSINT</span>
+      <div class="cap-title">Open Source Intelligence</div>
+      <p class="cap-desc">Deep surface, social, and dark web intelligence gathering. Threat actor profiling, digital footprint analysis, and signal correlation across open data sources.</p>
+      <div class="cap-tags"><span class="tag">Threat Profiling</span><span class="tag">Dark Web Recon</span><span class="tag">Signal Correlation</span></div>
+    </div>
+    <div class="cap-card">
+      <span class="cap-icon">// 02 — MARKET INTEL</span>
+      <div class="cap-title">Business &amp; Market Intelligence</div>
+      <p class="cap-desc">Competitor analysis, market entry research, funding signal detection, and strategic landscape mapping for fast-moving tech and cybersecurity markets.</p>
+      <div class="cap-tags"><span class="tag">Competitor Analysis</span><span class="tag">Funding Signals</span><span class="tag">Market Mapping</span></div>
+    </div>
+    <div class="cap-card">
+      <span class="cap-icon">// 03 — TECH RESEARCH</span>
+      <div class="cap-title">Codebase &amp; Project Research</div>
+      <p class="cap-desc">Deep technical analysis of open and closed source projects. Architecture review, dependency mapping, vulnerability surface analysis, and implementation intelligence.</p>
+      <div class="cap-tags"><span class="tag">Open Source</span><span class="tag">Closed Source</span><span class="tag">Dependency Audit</span></div>
+    </div>
+    <div class="cap-card">
+      <span class="cap-icon">// 04 — THREAT INTEL</span>
+      <div class="cap-title">Cybersecurity Intelligence</div>
+      <p class="cap-desc">Adversarial research, CTI enrichment, attack surface mapping, and emerging threat landscape analysis. Research-grade intelligence for security teams.</p>
+      <div class="cap-tags"><span class="tag">CTI Enrichment</span><span class="tag">Attack Surface</span><span class="tag">Adversarial Research</span></div>
+    </div>
+    <div class="cap-card">
+      <span class="cap-icon">// 05 — CROSS-DOMAIN</span>
+      <div class="cap-title">Cross-Domain Synthesis</div>
+      <p class="cap-desc">The core REDSTORM capability. Multi-agent AI architecture that processes and correlates across technical, financial, geopolitical, and threat domains simultaneously.</p>
+      <div class="cap-tags"><span class="tag">Multi-Agent AI</span><span class="tag">Signal Fusion</span><span class="tag">Pattern Recognition</span></div>
+    </div>
+    <div class="cap-card">
+      <span class="cap-icon">// 06 — DELIVERY</span>
+      <div class="cap-title">Insight Report Delivery</div>
+      <p class="cap-desc">All research delivered as structured insight reports — scoped to your exact brief. Actionable intelligence, not raw data dumps. Consulting engagement start to finish.</p>
+      <div class="cap-tags"><span class="tag">Structured Reports</span><span class="tag">Actionable Intel</span><span class="tag">Client Scoped</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section how-section" id="how">
+  <div class="how-inner">
+    <div>
+      <div class="section-tag">Process</div>
+      <h2 class="section-title">How a REDSTORM Engagement Works</h2>
+      <p class="section-desc">Three steps. No ambiguity. Intelligence delivered on scope, on time.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <div class="step-title">CLIENT SUBMITS SCOPE</div>
+            <p class="step-desc">You define the research objective — a target, a domain, a question, or a problem. The tighter the scope, the sharper the output.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <div class="step-title">REDSTORM RUNS RESEARCH</div>
+            <p class="step-desc">The system deploys across relevant intelligence domains simultaneously — OSINT, technical, market, and threat layers processed in parallel.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <div class="step-title">INSIGHT REPORT DELIVERED</div>
+            <p class="step-desc">You receive a structured intelligence report — findings, correlations, and actionable recommendations. Not raw data. Decisions-ready intelligence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+        <span class="t-title">REDSTORM // RESEARCH ENGINE v2.4</span>
+      </div>
+      <span class="t-line"><span class="prompt">❯ </span><span class="cmd">init_research --scope="client_brief.json"</span></span>
+      <span class="t-line dim">  ────────────────────────────────────────</span>
+      <span class="t-line"><span class="out">  [SYS] Loading agent topology... READY</span></span>
+      <span class="t-line"><span class="out">  [SYS] Cross-domain index... ONLINE</span></span>
+      <span class="t-line dim">  ────────────────────────────────────────</span>
+      <span class="t-line"><span class="prompt">❯ </span><span class="cmd">deploy --agents=OSINT,MARKET,THREAT,TECH</span></span>
+      <span class="t-line"><span class="out">  [OSINT]  Surface scan... ████████ 100%</span></span>
+      <span class="t-line"><span class="out">  [MARKET] Competitor map... ████████ 100%</span></span>
+      <span class="t-line"><span class="out">  [THREAT] CTI enrichment... ████████ 100%</span></span>
+      <span class="t-line"><span class="out">  [TECH]   Codebase scan... ████████ 100%</span></span>
+      <span class="t-line dim">  ────────────────────────────────────────</span>
+      <span class="t-line"><span class="prompt">❯ </span><span class="cmd">synthesize --output=insight_report</span></span>
+      <span class="t-line"><span class="warn">  [SYNTH] Cross-domain correlation... DONE</span></span>
+      <span class="t-line"><span class="out">  [OUT]   Report compiled: 47 findings</span></span>
+      <span class="t-line"><span class="out">  [OUT]   Confidence score: 94.2%</span></span>
+      <span class="t-line dim">  ────────────────────────────────────────</span>
+      <span class="t-line"><span class="prompt">❯ </span><span class="cmd">deliver --client --format=structured</span></span>
+      <span class="t-line"><span class="out">  [✓] INSIGHT REPORT READY FOR DELIVERY</span></span>
+      <span class="t-line"><span class="prompt">❯ </span><span class="cursor"></span></span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="segments">
+  <div class="section-tag">Who We Serve</div>
+  <h2 class="section-title">Built for Organizations That Need Intelligence Others Can't Provide</h2>
+  <div class="segments">
+    <div class="seg-card">
+      <div class="seg-label">// Segment 01</div>
+      <div class="seg-title">Cybersecurity Companies</div>
+      <ul class="seg-list">
+        <li>Threat actor &amp; adversary profiling</li>
+        <li>Dark web &amp; underground forum OSINT</li>
+        <li>Competitor vulnerability surface analysis</li>
+        <li>CTI enrichment for security products</li>
+        <li>Emerging attack vector research</li>
+      </ul>
+    </div>
+    <div class="seg-card">
+      <div class="seg-label">// Segment 02</div>
+      <div class="seg-title">AI Companies &amp; Startups</div>
+      <ul class="seg-list">
+        <li>Competitor model &amp; product intelligence</li>
+        <li>Open source AI codebase analysis</li>
+        <li>Regulatory &amp; compliance landscape mapping</li>
+        <li>Funding and talent signal detection</li>
+        <li>Technical due diligence on AI tooling</li>
+      </ul>
+    </div>
+    <div class="seg-card">
+      <div class="seg-label">// Segment 03</div>
+      <div class="seg-title">General Business Clients</div>
+      <ul class="seg-list">
+        <li>Market entry &amp; competitive intelligence</li>
+        <li>Vendor &amp; partner due diligence</li>
+        <li>Industry landscape &amp; trend analysis</li>
+        <li>Tech stack &amp; project evaluation</li>
+        <li>Strategic decision-support research</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <div class="section-tag">Contact</div>
+      <h2 class="section-title">Submit a Research Brief</h2>
+      <p class="section-desc">Ready to run a REDSTORM engagement? Describe your research objective and we'll define scope, timeline, and pricing.</p>
+      <div class="contact-detail">
+        <div class="c-item"><span class="c-label">Response Time</span><span class="c-value">Within 24 hours</span></div>
+        <div class="c-item"><span class="c-label">Typical Turnaround</span><span class="c-value">48 – 72 hours post-brief</span></div>
+        <div class="c-item"><span class="c-label">Engagement Type</span><span class="c-value">Consulting // Per-project</span></div>
+        <div class="c-item"><span class="c-label">System Status</span><span class="c-value" style="color:#27c93f">● ONLINE — Accepting Briefs</span></div>
+      </div>
+    </div>
+    <div>
+      <form class="inquiry-form" id="inquiryForm">
+        <div class="form-row">
+          <div class="field"><label for="fname">First Name</label><input type="text" id="fname" placeholder="Jane" required></div>
+          <div class="field"><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Smith" required></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="email">Email Address</label><input type="email" id="email" placeholder="jane@company.com" required></div>
+          <div class="field"><label for="company">Company / Organization</label><input type="text" id="company" placeholder="Acme Security Inc."></div>
+        </div>
+        <div class="field">
+          <label for="segment">Client Segment</label>
+          <select id="segment" required>
+            <option value="" disabled selected>Select your sector...</option>
+            <option>Cybersecurity Company</option>
+            <option>AI Company / Startup</option>
+            <option>General Business</option>
+            <option>Independent Researcher</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="scope">Research Scope / Objective</label>
+          <textarea id="scope" placeholder="Describe what you need researched. The more specific, the better the output — target, domain, questions, known constraints..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">TRANSMIT RESEARCH BRIEF →</button>
+        <p class="form-note">// All briefs are handled confidentially. No data shared with third parties.</p>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <span class="success-icon">✓</span>
+        <p>BRIEF RECEIVED.<br>REDSTORM is processing your inquiry.<br>Expect a response within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">REDSTORM // RESEARCH</div>
+  <div class="footer-copy">© 2025 REDSTORM RESEARCH — All Rights Reserved</div>
+  <div class="footer-status"><span class="status-dot"></span>SYSTEM ONLINE</div>
+</footer>
+
+<script>
+  document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.cap-card, .seg-card, .step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

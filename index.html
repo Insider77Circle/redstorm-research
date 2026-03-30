@@ -667,6 +667,96 @@
     .divider { margin: 0 1.5rem; }
     .stat { padding: 1.5rem; }
   }
+
+  /* ENGAGEMENTS */
+  .engagements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .engagement-card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .engagement-card:hover {
+    border-color: var(--red);
+    box-shadow: 0 0 20px var(--red-glow);
+  }
+
+  .engagement-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red-glow);
+  }
+
+  .engagement-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .engagement-title {
+    font-family: var(--head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .engagement-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .engagement-btn {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--red);
+    color: var(--red);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .engagement-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--red);
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+  }
+
+  .engagement-btn:hover::before { transform: translateX(0); }
+  .engagement-btn:hover { color: var(--bg); }
+  .engagement-btn span { position: relative; z-index: 1; }
+
+  .engagement-btn.secondary {
+    border-color: var(--cyan-dim);
+    color: var(--cyan);
+  }
+
+  .engagement-btn.secondary::before { background: var(--cyan); }
+  .engagement-btn.secondary:hover { color: var(--bg); }
 </style>
 </head>
 <body>
@@ -680,6 +770,7 @@
     <li><a href="#capabilities">Capabilities</a></li>
     <li><a href="#how">Process</a></li>
     <li><a href="#segments">Who We Serve</a></li>
+    <li><a href="#engagements">Engagements</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="warp/">Drone Activity</a></li>
@@ -857,6 +948,30 @@
 </section>
 
 <div class="divider"></div>
+
+<section class="section" id="engagements">
+  <div class="section-tag">Engagements</div>
+  <h2 class="section-title">Research Engagements</h2>
+  <p class="section-desc">Published REDSTORM research briefs and engagement outputs. Access full reports below.</p>
+  <div class="engagements-grid">
+    <div class="engagement-card">
+      <div class="engagement-label">// ENGAGEMENT — 01</div>
+      <div class="engagement-title">Kharg Invasion</div>
+      <div class="engagement-actions">
+        <a href="engagements/kharg_invasion_final.pdf" class="engagement-btn" target="_blank"><span>View Report →</span></a>
+        <a href="engagements/kharg_invasion_final.pdf" class="engagement-btn secondary" download><span>Download PDF</span></a>
+      </div>
+    </div>
+    <div class="engagement-card">
+      <div class="engagement-label">// ENGAGEMENT — 02</div>
+      <div class="engagement-title">Hormuz Cyberpunk</div>
+      <div class="engagement-actions">
+        <a href="engagements/hormuz_cyberpunk_final.pdf" class="engagement-btn" target="_blank"><span>View Report →</span></a>
+        <a href="engagements/hormuz_cyberpunk_final.pdf" class="engagement-btn secondary" download><span>Download PDF</span></a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="about">
   <div class="section-tag">About</div>

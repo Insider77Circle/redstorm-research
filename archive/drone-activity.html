@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRONE ACTIVITY INTEL — Barksdale AFB Incursion Series</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #ff0a2e;
+    --red-dim: #8b0015;
+    --red-glow: rgba(255,10,46,0.35);
+    --cyan: #00ffe7;
+    --cyan-dim: #00897b;
+    --cyan-glow: rgba(0,255,231,0.25);
+    --bg: #040608;
+    --bg2: #07090d;
+    --surface: rgba(255,10,46,0.04);
+    --border: rgba(255,10,46,0.2);
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --mono: 'Share Tech Mono', monospace;
+    --head: 'Orbitron', sans-serif;
+    --body: 'Rajdhani', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .grid-bg {
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,10,46,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,10,46,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+
+  section, nav, footer { position: relative; z-index: 2; }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    background: rgba(4,6,8,0.85);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: var(--head);
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 20px var(--red-glow);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text-dim); font-weight: 400; }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-cta::before { content: ''; position: absolute; inset: 0; background: var(--red); transform: translateX(-100%); transition: transform 0.2s; }
+  .nav-cta:hover::before { transform: translateX(0); }
+  .nav-cta:hover { color: var(--bg); }
+  .nav-cta span { position: relative; z-index: 1; }
+
+  .hero {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 5rem 4rem 4rem;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,10,46,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .classify-tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 0.3rem 1rem;
+    display: inline-block;
+    margin-bottom: 2rem;
+    animation: pulse-border 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 8px var(--red-glow); }
+    50% { box-shadow: 0 0 20px var(--red-glow), inset 0 0 8px var(--red-glow); }
+  }
+
+  .hero-eyebrow { font-family: var(--mono); font-size: 0.8rem; color: var(--cyan); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.2rem; }
+
+  .hero-title { font-family: var(--head); font-weight: 900; font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.1; letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .hero-title .accent { color: var(--red); text-shadow: 0 0 30px var(--red-glow); }
+  .hero-title .accent2 { color: var(--cyan); text-shadow: 0 0 30px var(--cyan-glow); }
+
+  .hero-sub { font-family: var(--body); font-size: 1.15rem; color: var(--text-dim); max-width: 700px; margin-bottom: 2.5rem; font-weight: 300; letter-spacing: 0.04em; }
+
+  .hero-meta { display: flex; gap: 3rem; font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; }
+  .hero-meta span { color: var(--cyan); margin-right: 0.5rem; }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
+  .stat-item { padding: 2rem 2.5rem; border-right: 1px solid var(--border); text-align: center; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: var(--head); font-weight: 900; font-size: 2.2rem; color: var(--red); text-shadow: 0 0 20px var(--red-glow); display: block; }
+  .stat-label { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.3rem; }
+
+  .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
+
+  .section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+
+  .section-tag { font-family: var(--mono); font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem; }
+  .section-tag::before { content: ''; display: block; width: 30px; height: 1px; background: var(--cyan); }
+
+  .section-title { font-family: var(--head); font-weight: 700; font-size: clamp(1.4rem, 2.5vw, 2rem); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2rem; color: var(--text); }
+  .section-title .hl { color: var(--red); }
+  .section-title .hl2 { color: var(--cyan); }
+
+  p { margin-bottom: 1.2rem; color: var(--text-dim); }
+  p strong { color: var(--text); }
+
+  .callout { border-left: 3px solid var(--red); background: var(--surface); padding: 1.5rem 2rem; margin: 2rem 0; font-family: var(--mono); font-size: 0.9rem; line-height: 1.8; }
+  .callout.cyan { border-left-color: var(--cyan); }
+  .callout-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 0.8rem; }
+  .callout.cyan .callout-label { color: var(--cyan); }
+
+  .detect-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--mono); font-size: 0.8rem; }
+  .detect-table th { background: rgba(255,10,46,0.08); color: var(--red); text-transform: uppercase; letter-spacing: 0.12em; padding: 0.8rem 1rem; border: 1px solid var(--border); text-align: left; font-weight: 400; }
+  .detect-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); color: var(--text-dim); }
+  .detect-table tr:hover td { background: var(--surface); color: var(--text); }
+  .detect-table td.hl { color: var(--cyan); }
+
+  .phases { margin-top: 2.5rem; display: grid; gap: 1px; background: var(--border); }
+  .phase { background: var(--bg2); padding: 2rem 2.5rem; display: grid; grid-template-columns: 120px 1fr; gap: 2rem; transition: background 0.2s; }
+  .phase:hover { background: rgba(255,10,46,0.03); }
+  .phase-id { font-family: var(--head); font-weight: 900; font-size: 1.8rem; color: var(--red); text-shadow: 0 0 15px var(--red-glow); opacity: 0.5; line-height: 1; }
+  .phase-title { font-family: var(--head); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text); margin-bottom: 0.5rem; }
+  .phase-desc { font-size: 0.9rem; color: var(--text-dim); }
+  .phase-meta { display: flex; gap: 1.5rem; margin-top: 0.8rem; font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); }
+  .phase-meta .pval { color: var(--cyan); margin-right: 0.3rem; }
+
+  footer { border-top: 1px solid var(--border); padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim); }
+  .footer-logo { font-family: var(--head); font-weight: 900; font-size: 0.85rem; color: var(--red); letter-spacing: 0.2em; text-shadow: 0 0 12px var(--red-glow); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cyan); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .content-wrap { padding: 0 1.5rem; }
+    .hero { padding: 3rem 1.5rem; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .phase { grid-template-columns: 80px 1fr; gap: 1rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav>
+  <a href="../../index.html" class="nav-logo">REDSTORM<span> // RESEARCH</span></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html#capabilities">Capabilities</a></li>
+    <li><a href="../../index.html#how">Process</a></li>
+    <li><a href="../../index.html#segments">Who We Serve</a></li>
+    <li><a href="../../index.html#about">About</a></li>
+    <li><a href="../../warp/">Red-Agent</a></li>
+    <li><a href="../index.html" class="active">Archive</a></li>
+    <li><a href="../../index.html#contact">Contact</a></li>
+  </ul>
+  <a href="../../index.html#contact" class="nav-cta"><span>Request Brief</span></a>
+</nav>
+
+<section class="hero">
+  <div class="classify-tag">SENSITIVE // INTERNAL ANALYSIS // RSR-2026-0315</div>
+  <div class="hero-eyebrow">Threat Intelligence Assessment · Barksdale AFB · March 9–15, 2026</div>
+  <h1 class="hero-title">
+    <span class="accent">Barksdale AFB</span><br>
+    <span class="accent2">Drone Incursion</span> Series
+  </h1>
+  <p class="hero-sub">A sustained, multi-night state-level intelligence-gathering campaign against one of the United States' most sensitive strategic installations. Seven days. Twelve to fifteen drones per wave. Nuclear-capable B-52H Stratofortresses in the target zone.</p>
+  <div class="hero-meta">
+    <div><span>REPORT:</span>RSR-2026-0315</div>
+    <div><span>DATE:</span>15 March 2026</div>
+    <div><span>ANALYST:</span>Red Storm Research</div>
+    <div><span>CLASS:</span>SENSITIVE // INTERNAL</div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-item"><span class="stat-num">7</span><div class="stat-label">Day Campaign Window</div></div>
+  <div class="stat-item"><span class="stat-num">12–15</span><div class="stat-label">Drones Per Wave</div></div>
+  <div class="stat-item"><span class="stat-num">4hrs</span><div class="stat-label">Loiter Time Per Incursion</div></div>
+  <div class="stat-item"><span class="stat-num">CHARLIE</span><div class="stat-label">FPCON Level Reached</div></div>
+</div>
+
+<section class="section" id="summary">
+  <div class="content-wrap">
+    <div class="section-tag">Section I</div>
+    <h2 class="section-title"><span class="hl">Incident</span> Summary</h2>
+    <p>Between March 9 and March 15, 2026, Barksdale Air Force Base in Shreveport, Louisiana was subjected to a series of coordinated drone incursions. The operation was not a single event — it was a <strong>sustained, multi-night intelligence-gathering campaign</strong> conducted against one of the United States' most sensitive strategic installations.</p>
+    <p>Swarms of 12 to 15 drones appeared over the installation across multiple nights, each loitering over the base for approximately four hours per incursion. Critically, the drones flew directly over the most sensitive areas of the installation — including the main flight line where nuclear-capable B-52H Stratofortress bombers are housed and maintained.</p>
+    <p>The Air Force response was immediate and severe. A shelter-in-place order was issued for base personnel. The installation's Force Protection Condition was elevated to "Charlie" — indicating a credible threat to the installation. A multi-agency investigation was launched with FBI involvement.</p>
+    <div class="callout">
+      <div class="callout-label">Key Incident Facts</div>
+      <table class="detect-table" style="margin:0.8rem 0 0;">
+        <thead><tr><th>Parameter</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Event location</td><td class="hl">Barksdale AFB, Shreveport, Louisiana</td></tr>
+          <tr><td>Campaign window</td><td class="hl">March 9 – 15, 2026 (7 days)</td></tr>
+          <tr><td>Swarm size</td><td class="hl">12 to 15 drones per wave</td></tr>
+          <tr><td>Loiter time</td><td class="hl">Approximately 4 hours per incursion</td></tr>
+          <tr><td>Target areas</td><td class="hl">Main flight line — nuclear-capable B-52H Stratofortresses</td></tr>
+          <tr><td>Official response</td><td class="hl">Shelter-in-place; FPCON elevated to Charlie; FBI investigation launched</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="capabilities">
+  <div class="content-wrap">
+    <div class="section-tag">Section II</div>
+    <h2 class="section-title">Capabilities &amp; <span class="hl2">Strategic Intent</span></h2>
+    <p>The drones observed over Barksdale were not hobbyist hardware. Signal analysis confirmed non-commercial control characteristics, long-range control links, and active resistance to standard military jamming protocols. This level of technical sophistication — combined with the operational discipline to sustain a week-long surveillance campaign near a secure military installation — <strong>strongly indicates a state-level actor.</strong></p>
+    <table class="detect-table">
+      <thead><tr><th>Capability</th><th>Indicator</th><th>Score</th></tr></thead>
+      <tbody>
+        <tr><td>Signal sophistication</td><td>Non-commercial control characteristics confirmed</td><td class="hl">95/100</td></tr>
+        <tr><td>Jamming resistance</td><td>Active resistance to standard military jamming</td><td class="hl">90/100</td></tr>
+        <tr><td>Operational security</td><td>7-day sustained multi-night operation</td><td class="hl">88/100</td></tr>
+        <tr><td>ISR sensor capability</td><td>High-resolution imaging payload suspected</td><td class="hl">82/100</td></tr>
+        <tr><td>Persistence / loiter time</td><td>~4 hours per incursion, repeated nightly</td><td class="hl">78/100</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <div class="callout-label">The Deliberate Visibility Tactic</div>
+      The most analytically significant detail of this operation is what the drones did <em>not</em> do: they did not attempt stealth. The drones flew with their lights on throughout each incursion. This was not a tradecraft failure — it was a <strong>deliberate intelligence collection strategy.</strong> By making themselves conspicuous, the operators were able to observe and record the base's entire response chain in real time: security force reaction times, communication patterns, emergency procedures, and the public statements of base officials.
+    </div>
+    <div class="callout cyan">
+      <div class="callout-label">Primary Objective: Digital Twin Creation</div>
+      The primary strategic objective of this operation was almost certainly the creation of a <strong>high-resolution digital twin</strong> of the Barksdale installation. Using LiDAR, photogrammetric sensors, or other advanced imaging payloads, the drone swarms would have been collecting precise three-dimensional data across the installation during each loiter period. Combined with patrol route observation, a complete operational picture of the base's defensive architecture could be assembled over the course of the week.
+    </div>
+    <div class="callout cyan">
+      <div class="callout-label">Operational Context</div>
+      The timing of the incursion campaign carries additional analytical weight. The campaign commenced shortly after the initiation of <strong>Operation Epic Fury</strong>, a major US military operation. This correlation suggests the Barksdale incursions were not opportunistic — they were a <strong>reactive intelligence collection mission</strong> by a peer adversary assessing US strategic posture and nuclear readiness.
+    </div>
+  </div>
+</section>
+
+<section class="section" id="launch-control">
+  <div class="content-wrap">
+    <div class="section-tag">Section III</div>
+    <h2 class="section-title">Launch &amp; <span class="hl">Control</span> Analysis</h2>
+    <p>Identifying the launch and control methodology is critical to understanding both the adversary's operational sophistication and the practical feasibility of future interdiction. Three primary scenarios were assessed.</p>
+    <div class="callout">
+      <div class="callout-label">Scenarios Ruled Out</div>
+      Fixed launch sites (residential or commercial buildings) were assessed and eliminated. A stationary launch point operating over a multi-day window near a federal installation would be trivially identified through signals triangulation by either law enforcement or organic military intelligence assets.
+    </div>
+    <div class="section-tag" style="margin-top:3rem;">Most Probable Scenario</div>
+    <h3 class="section-title"><span class="hl2">Hybrid C2 / LRT Operation</span></h3>
+    <p>The operational pattern most consistent with the observed evidence is a compartmentalized hybrid operation running two distinct cells simultaneously.</p>
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-id" style="font-size:1.1rem; opacity:1; color:var(--red);">C2</div>
+        <div class="phase-content">
+          <div class="phase-title">Mobile Command &amp; Control Node</div>
+          <div class="phase-desc">Specialized vehicle in constant motion on the surrounding road network, miles from the base. Never stationary — immune to triangulation. Houses operators, advanced control equipment, and collected intelligence. High-value assets never exposed to interdiction risk associated with the launch site.</div>
+          <div class="phase-meta">
+            <div><span class="pval">TYPE:</span>Specialized vehicle</div>
+            <div><span class="pval">POSTURE:</span>Constant motion</div>
+            <div><span class="pval">EXPOSURE:</span>Near-zero interdiction risk</div>
+          </div>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-id" style="font-size:1.1rem; opacity:1; color:var(--cyan);">LRT</div>
+        <div class="phase-content">
+          <div class="phase-title">Launch &amp; Recovery Team</div>
+          <div class="phase-desc">Small ground team transporting drone swarms to concealed rural launch sites each night — wooded areas, swampland, or farmland common to the Shreveport region. Launches the swarm, which links to the distant C2 node. Even if the LRT were compromised, primary intelligence-gathering capability and its personnel would remain secure.</div>
+          <div class="phase-meta">
+            <div><span class="pval">SITES:</span>Concealed rural locations</div>
+            <div><span class="pval">TERRAIN:</span>Wooded / swampland</div>
+            <div><span class="pval">FUNCTION:</span>Expendable launch asset</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="callout cyan" style="margin-top:2.5rem;">
+      <div class="callout-label">Analytical Assessment</div>
+      This operational pattern reflects <strong>professional, doctrine-based intelligence tradecraft</strong>. The deliberate separation of high-value assets from exposure risk, sustained multi-night operational tempo, and the sophistication of the drone platforms themselves are collectively inconsistent with criminal, commercial, or non-state actor activity. The indicators are consistent with a <strong>state-sponsored collection operation</strong> executed against a nuclear-relevant US military installation.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">REDSTORM // RESEARCH</div>
+  <div class="footer-links">
+    <a href="../../index.html">Home</a>
+    <a href="../index.html">Archive</a>
+    <a href="../../index.html#contact">Contact</a>
+  </div>
+  <div>SENSITIVE // INTERNAL ANALYSIS // RED STORM RESEARCH // RSR-2026-0315</div>
+</footer>
+
+</body>
+</html>

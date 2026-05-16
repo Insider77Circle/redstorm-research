@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCHIVE — REDSTORM RESEARCH</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #ff0a2e;
+    --red-dim: #8b0015;
+    --red-glow: rgba(255,10,46,0.35);
+    --cyan: #00ffe7;
+    --cyan-dim: #00897b;
+    --cyan-glow: rgba(0,255,231,0.25);
+    --bg: #040608;
+    --bg2: #07090d;
+    --surface: rgba(255,10,46,0.04);
+    --border: rgba(255,10,46,0.2);
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --mono: 'Share Tech Mono', monospace;
+    --head: 'Orbitron', sans-serif;
+    --body: 'Rajdhani', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .grid-bg {
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,10,46,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,10,46,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+
+  section, nav, footer { position: relative; z-index: 2; }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    background: rgba(4,6,8,0.85);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: var(--head);
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 20px var(--red-glow);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text-dim); font-weight: 400; }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--red);
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+  }
+  .nav-cta:hover::before { transform: translateX(0); }
+  .nav-cta:hover { color: var(--bg); }
+  .nav-cta span { position: relative; z-index: 1; }
+
+  /* ARCHIVE HERO */
+  .archive-header {
+    padding: 5rem 4rem 4rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .archive-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,10,46,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .archive-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--cyan);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .archive-title {
+    font-family: var(--head);
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: var(--text);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .archive-title span { color: var(--red); text-shadow: 0 0 20px var(--red-glow); }
+  .archive-desc {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    max-width: 600px;
+  }
+
+  /* ARTICLE LIST */
+  .articles-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem;
+  }
+
+  .article-entry {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .article-entry::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red-glow);
+  }
+
+  .article-entry:hover {
+    border-color: rgba(255,10,46,0.5);
+    box-shadow: 0 0 25px rgba(255,10,46,0.08);
+  }
+
+  .article-meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    gap: 2rem;
+  }
+  .article-meta span { color: var(--cyan); }
+
+  .article-title {
+    font-family: var(--head);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .article-excerpt {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.75;
+    max-width: 700px;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .tag.red { border-color: var(--red-dim); color: var(--red); }
+  .tag.cyan { border-color: var(--cyan-dim); color: var(--cyan); }
+
+  .article-link {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+  .article-link::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--red);
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+  }
+  .article-link:hover::before { transform: translateX(0); }
+  .article-link:hover { color: var(--bg); }
+  .article-link span { position: relative; z-index: 1; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .footer-logo {
+    font-family: var(--head);
+    font-weight: 900;
+    font-size: 0.85rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 12px var(--red-glow);
+  }
+
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cyan); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .archive-header { padding: 3rem 1.5rem; }
+    .articles-wrap { padding: 2rem 1.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">REDSTORM<span> // RESEARCH</span></a>
+  <ul class="nav-links">
+    <li><a href="../index.html#capabilities">Capabilities</a></li>
+    <li><a href="../index.html#how">Process</a></li>
+    <li><a href="../index.html#segments">Who We Serve</a></li>
+    <li><a href="../index.html#engagements">Engagements</a></li>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../warp/">Red-Agent</a></li>
+    <li><a href="index.html" class="active">Archive</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <a href="../index.html#contact" class="nav-cta"><span>Request Brief</span></a>
+</nav>
+
+<div class="archive-header">
+  <div class="archive-eyebrow">// Intelligence Archive — Past Reports &amp; Analysis</div>
+  <h1 class="archive-title">REDSTORM <span>ARCHIVE</span></h1>
+  <p class="archive-desc">// Completed intelligence assessments, threat reports, and published analysis. All archived material reflects conditions at time of publication.</p>
+</div>
+
+<div class="articles-wrap">
+
+  <div class="article-entry">
+    <div class="article-meta">
+      <div><span>DATE:</span> 15 March 2026</div>
+      <div><span>REF:</span> RSR-2026-0315</div>
+      <div><span>CLASS:</span> SENSITIVE // INTERNAL</div>
+    </div>
+    <div class="article-title">Barksdale AFB — Drone Incursion Series</div>
+    <p class="article-excerpt">A sustained, multi-night state-level intelligence-gathering campaign against one of the United States' most sensitive strategic installations. Seven days. Twelve to fifteen drones per wave. Nuclear-capable B-52H Stratofortresses in the target zone. Analysis of capabilities, strategic intent, and hybrid C2/LRT launch methodology.</p>
+    <div class="article-tags">
+      <span class="tag red">Threat Intel</span>
+      <span class="tag">UAS / Drone Activity</span>
+      <span class="tag">State Actor</span>
+      <span class="tag cyan">ISR Analysis</span>
+      <span class="tag">Nuclear Infrastructure</span>
+    </div>
+    <a href="drone-activity.html" class="article-link"><span>Read Report →</span></a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">REDSTORM // RESEARCH</div>
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../index.html#capabilities">Capabilities</a>
+    <a href="../index.html#contact">Contact</a>
+  </div>
+  <div>© 2025 REDSTORM RESEARCH — ALL RIGHTS RESERVED</div>
+</footer>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DRONE ACTIVITY INTEL — Barksdale AFB Incursion Series</title>
+<title>RED-AGENT — AI-Powered Proxy Command Center</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -59,7 +59,6 @@
 
   section, nav, footer { position: relative; z-index: 2; }
 
-  /* NAV */
   nav {
     display: flex;
     justify-content: space-between;
@@ -109,13 +108,7 @@
     position: relative;
     overflow: hidden;
   }
-  .nav-cta::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: var(--red);
-    transform: translateX(-100%);
-    transition: transform 0.2s;
-  }
+  .nav-cta::before { content: ''; position: absolute; inset: 0; background: var(--red); transform: translateX(-100%); transition: transform 0.2s; }
   .nav-cta:hover::before { transform: translateX(0); }
   .nav-cta:hover { color: var(--bg); }
   .nav-cta span { position: relative; z-index: 1; }
@@ -145,480 +138,306 @@
     font-family: var(--mono);
     font-size: 0.72rem;
     letter-spacing: 0.25em;
-    color: var(--red);
-    border: 1px solid var(--red);
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
     padding: 0.3rem 1rem;
     display: inline-block;
     margin-bottom: 2rem;
-    animation: pulse-border 2s ease-in-out infinite;
+    animation: pulse-border-cyan 2s ease-in-out infinite;
   }
 
-  @keyframes pulse-border {
-    0%, 100% { box-shadow: 0 0 8px var(--red-glow); }
-    50% { box-shadow: 0 0 20px var(--red-glow), inset 0 0 8px var(--red-glow); }
+  @keyframes pulse-border-cyan {
+    0%, 100% { box-shadow: 0 0 8px var(--cyan-glow); }
+    50% { box-shadow: 0 0 20px var(--cyan-glow), inset 0 0 8px var(--cyan-glow); }
   }
 
-  .hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--cyan);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-bottom: 1.2rem;
+  .hero-eyebrow { font-family: var(--mono); font-size: 0.8rem; color: var(--cyan); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.2rem; }
+
+  .hero-title { font-family: var(--head); font-weight: 900; font-size: clamp(2.8rem, 6vw, 5rem); line-height: 1.0; letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .hero-title .accent { color: var(--red); text-shadow: 0 0 40px var(--red-glow), 0 0 80px rgba(255,10,46,0.15); display: block; }
+  .hero-title .accent2 { color: var(--text); opacity: 0.9; display: block; font-size: 0.55em; letter-spacing: 0.15em; margin-top: 0.3rem; }
+
+  .hero-sub { font-family: var(--body); font-size: 1.2rem; color: var(--text-dim); max-width: 680px; margin: 0 auto 2.5rem; font-weight: 300; letter-spacing: 0.04em; line-height: 1.8; }
+
+  .hero-meta { display: flex; gap: 3rem; font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; flex-wrap: wrap; justify-content: center; }
+  .hero-meta span { color: var(--red); margin-right: 0.5rem; }
+
+  .hero-actions { display: flex; gap: 1.2rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center; }
+
+  .btn-primary {
+    font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--bg); background: var(--red); border: none; padding: 0.9rem 2.2rem;
+    text-decoration: none; cursor: pointer; transition: all 0.25s;
+    box-shadow: 0 0 25px var(--red-glow);
   }
+  .btn-primary:hover { box-shadow: 0 0 45px rgba(255,10,46,0.6); transform: translateY(-1px); }
 
-  .hero-title {
-    font-family: var(--head);
-    font-weight: 900;
-    font-size: clamp(2.2rem, 5vw, 4rem);
-    line-height: 1.1;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
+  .btn-secondary {
+    font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cyan); background: transparent; border: 1px solid rgba(0,255,231,0.3);
+    padding: 0.9rem 2.2rem; text-decoration: none; transition: all 0.25s;
   }
-
-  .hero-title .accent { color: var(--red); text-shadow: 0 0 30px var(--red-glow); }
-  .hero-title .accent2 { color: var(--cyan); text-shadow: 0 0 30px var(--cyan-glow); }
-
-  .hero-sub {
-    font-family: var(--body);
-    font-size: 1.15rem;
-    color: var(--text-dim);
-    max-width: 700px;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-    letter-spacing: 0.04em;
-  }
-
-  .hero-meta {
-    display: flex;
-    gap: 3rem;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-  }
-
-  .hero-meta span { color: var(--cyan); margin-right: 0.5rem; }
+  .btn-secondary:hover { border-color: var(--cyan); box-shadow: 0 0 20px var(--cyan-glow); }
 
   /* STATS BAR */
-  .stats-bar {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .stat-item {
-    padding: 2rem 2.5rem;
-    border-right: 1px solid var(--border);
-    text-align: center;
-  }
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
+  .stat-item { padding: 2rem 2.5rem; border-right: 1px solid var(--border); text-align: center; }
   .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: var(--head); font-weight: 900; font-size: 2.2rem; color: var(--red); text-shadow: 0 0 20px var(--red-glow); display: block; }
+  .stat-label { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.3rem; }
 
-  .stat-num {
-    font-family: var(--head);
-    font-weight: 900;
-    font-size: 2.2rem;
-    color: var(--red);
-    text-shadow: 0 0 20px var(--red-glow);
-    display: block;
-  }
-
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    color: var(--text-dim);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-top: 0.3rem;
-  }
-
-  /* CONTENT LAYOUT */
-  .content-wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 4rem;
-  }
-
-  /* SECTIONS */
-  .section {
-    padding: 5rem 0;
+  /* DEMO SECTION */
+  .demo-section {
     border-bottom: 1px solid var(--border);
+    padding: 5rem 0;
+    background: var(--bg2);
   }
 
-  .section-tag {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--cyan);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
+  .demo-wrap { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
+
+  .demo-container {
+    border: 1px solid var(--border);
+    background: #020305;
+    position: relative;
+    overflow: hidden;
+    margin-top: 2.5rem;
+  }
+
+  .demo-container::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, var(--red-dim), transparent 40%, var(--cyan-dim) 100%);
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .demo-bar {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    border-bottom: 1px solid rgba(255,10,46,0.1);
+    background: rgba(255,10,46,0.03);
   }
 
-  .section-tag::before {
-    content: '';
+  .t-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .t-dot:nth-child(1) { background: #ff5f56; }
+  .t-dot:nth-child(2) { background: #ffbd2e; }
+  .t-dot:nth-child(3) { background: #27c93f; }
+  .demo-title { font-family: var(--mono); color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.1em; margin-left: auto; text-transform: uppercase; }
+
+  .demo-container img {
+    width: 100%;
+    height: auto;
     display: block;
-    width: 30px;
-    height: 1px;
-    background: var(--cyan);
+    position: relative;
+    z-index: 1;
   }
 
-  .section-title {
-    font-family: var(--head);
-    font-weight: 700;
-    font-size: clamp(1.4rem, 2.5vw, 2rem);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 2rem;
-    color: var(--text);
-  }
+  /* CONTENT */
+  .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
 
+  .section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+
+  .section-tag { font-family: var(--mono); font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem; }
+  .section-tag::before { content: ''; display: block; width: 30px; height: 1px; background: var(--cyan); }
+
+  .section-title { font-family: var(--head); font-weight: 700; font-size: clamp(1.4rem, 2.5vw, 2rem); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2rem; color: var(--text); }
   .section-title .hl { color: var(--red); }
   .section-title .hl2 { color: var(--cyan); }
 
   p { margin-bottom: 1.2rem; color: var(--text-dim); }
   p strong { color: var(--text); }
 
-  /* CALLOUT BOX */
-  .callout {
-    border-left: 3px solid var(--red);
-    background: var(--surface);
-    padding: 1.5rem 2rem;
-    margin: 2rem 0;
-    font-family: var(--mono);
-    font-size: 0.9rem;
-    line-height: 1.8;
-  }
-
+  .callout { border-left: 3px solid var(--red); background: var(--surface); padding: 1.5rem 2rem; margin: 2rem 0; font-family: var(--mono); font-size: 0.9rem; line-height: 1.8; }
   .callout.cyan { border-left-color: var(--cyan); }
-
-  .callout-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 0.8rem;
-  }
-
+  .callout-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 0.8rem; }
   .callout.cyan .callout-label { color: var(--cyan); }
 
-  /* CODE / MATH */
-  .math-block {
-    background: rgba(0,255,231,0.04);
-    border: 1px solid rgba(0,255,231,0.15);
-    border-left: 3px solid var(--cyan);
-    padding: 1.2rem 1.5rem;
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--cyan);
-    margin: 1.5rem 0;
-    white-space: pre-wrap;
-    overflow-x: auto;
-    line-height: 1.6;
-  }
-
-  /* PATH CARDS */
-  .paths-grid {
+  /* CAPABILITIES GRID */
+  .cap-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
     margin-top: 2.5rem;
   }
 
-  .path-card {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    padding: 2rem;
+  .cap-card {
+    background: var(--bg2);
+    padding: 2.5rem;
     position: relative;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    cursor: default;
+    overflow: hidden;
+    transition: background 0.3s;
   }
 
-  .path-card:hover {
-    border-color: var(--red);
-    box-shadow: 0 0 20px var(--red-glow);
+  .cap-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
   }
 
-  .path-card.featured {
-    border-color: var(--cyan-dim);
-    grid-column: span 2;
-  }
+  .cap-card:hover { background: rgba(255,10,46,0.03); }
+  .cap-card:hover::before { transform: scaleX(1); }
 
-  .path-num {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--red);
-    letter-spacing: 0.2em;
-    margin-bottom: 0.5rem;
-  }
+  .cap-icon { font-family: var(--mono); font-size: 0.8rem; color: var(--red); letter-spacing: 0.2em; margin-bottom: 1.2rem; display: block; }
+  .cap-title { font-family: var(--head); font-size: 1.05rem; font-weight: 700; color: #ffffff; letter-spacing: 0.05em; margin-bottom: 0.8rem; }
+  .cap-desc { font-size: 1rem; font-weight: 400; color: var(--text-dim); line-height: 1.75; }
+  .cap-tags { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
-  .path-title {
-    font-family: var(--head);
-    font-weight: 700;
-    font-size: 1.05rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    color: var(--text);
-  }
-
-  .path-body { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1rem; }
-
-  .path-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 1rem;
-  }
-
-  .tag {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    padding: 0.2rem 0.6rem;
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    text-transform: uppercase;
-  }
-
+  .tag { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; padding: 0.2rem 0.6rem; border: 1px solid var(--border); color: var(--text-dim); text-transform: uppercase; }
   .tag.red { border-color: var(--red-dim); color: var(--red); }
   .tag.cyan { border-color: var(--cyan-dim); color: var(--cyan); }
 
-  .path-cost {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--cyan);
-    margin-top: 1rem;
+  /* COMMAND EXAMPLES */
+  .cmd-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
   }
 
-  /* BUILD ORDER PHASES */
-  .phases {
-    margin-top: 2.5rem;
+  .cmd-block {
+    border: 1px solid var(--border);
+    background: #020305;
+    padding: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .cmd-label { font-size: 0.65rem; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; border-bottom: 1px solid rgba(0,255,231,0.1); padding-bottom: 0.6rem; }
+
+  .cmd-line { color: var(--text-dim); display: block; padding: 0.15rem 0; }
+  .cmd-line .prompt { color: var(--red); }
+  .cmd-line .cmd-text { color: var(--text); }
+  .cmd-line .out { color: var(--cyan); }
+
+  /* ARCHITECTURE */
+  .arch-flow {
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 1px;
     background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 2.5rem;
   }
 
-  .phase {
+  .arch-node {
     background: var(--bg2);
-    padding: 2rem 2.5rem;
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 2rem;
-    align-start: start;
+    padding: 2rem 1.5rem;
+    text-align: center;
     transition: background 0.2s;
+    position: relative;
   }
 
-  .phase:hover { background: rgba(255,10,46,0.03); }
+  .arch-node:hover { background: rgba(255,10,46,0.03); }
 
-  .phase-id {
-    font-family: var(--head);
-    font-weight: 900;
-    font-size: 1.8rem;
-    color: var(--red);
-    text-shadow: 0 0 15px var(--red-glow);
-    opacity: 0.5;
-    line-height: 1;
-  }
-
-  .phase-content {}
-
-  .phase-title {
-    font-family: var(--head);
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
-
-  .phase-desc { font-size: 0.9rem; color: var(--text-dim); }
-
-  .phase-meta {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 0.8rem;
+  .arch-node::after {
+    content: '→';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    transform: translateY(-50%);
     font-family: var(--mono);
-    font-size: 0.72rem;
-    color: var(--text-dim);
+    color: var(--red);
+    font-size: 1rem;
+    z-index: 2;
+    background: var(--bg2);
+    padding: 0 0.3rem;
   }
 
-  .phase-meta .pval { color: var(--cyan); margin-right: 0.3rem; }
+  .arch-node:last-child::after { display: none; }
 
-  /* QUESTIONS */
-  .question-list { margin-top: 2rem; display: grid; gap: 1rem; }
+  .arch-icon { font-family: var(--mono); font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.8rem; display: block; }
+  .arch-title { font-family: var(--head); font-size: 0.85rem; font-weight: 700; color: var(--text); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .arch-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
 
-  .question-item {
+  /* USE CASES */
+  .use-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .use-card {
     border: 1px solid var(--border);
     background: var(--surface);
-    padding: 1.5rem 2rem;
-    position: relative;
-    padding-left: 3rem;
-  }
-
-  .question-item::before {
-    content: '?';
-    position: absolute;
-    left: 1rem;
-    top: 1.4rem;
-    font-family: var(--head);
-    font-weight: 900;
-    font-size: 1.2rem;
-    color: var(--red);
-    opacity: 0.6;
-  }
-
-  .question-title {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--cyan);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.4rem;
-    text-transform: uppercase;
-  }
-
-  .question-body { font-size: 0.9rem; color: var(--text-dim); }
-
-  /* DETECTION TABLE */
-  .detect-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2rem 0;
-    font-family: var(--mono);
-    font-size: 0.8rem;
-  }
-
-  .detect-table th {
-    background: rgba(255,10,46,0.08);
-    color: var(--red);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    padding: 0.8rem 1rem;
-    border: 1px solid var(--border);
-    text-align: left;
-    font-weight: 400;
-  }
-
-  .detect-table td {
-    padding: 0.7rem 1rem;
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-  }
-
-  .detect-table tr:hover td { background: var(--surface); color: var(--text); }
-  .detect-table td.hl { color: var(--cyan); }
-
-  /* TIMELINE */
-  .timeline { margin-top: 2.5rem; }
-
-  .tl-item {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 2rem;
-    padding: 2rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .tl-item:last-child { border-bottom: none; }
-
-  .tl-period {
-    font-family: var(--head);
-    font-weight: 700;
-    font-size: 0.85rem;
-    color: var(--red);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding-top: 0.2rem;
-  }
-
-  .tl-title {
-    font-family: var(--head);
-    font-weight: 700;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text);
-    margin-bottom: 0.8rem;
-  }
-
-  .tl-body { font-size: 0.9rem; color: var(--text-dim); }
-
-  .tl-bullets { margin-top: 0.8rem; padding-left: 0; list-style: none; }
-
-  .tl-bullets li {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    padding: 0.3rem 0;
-    padding-left: 1.2rem;
-    position: relative;
-  }
-
-  .tl-bullets li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: var(--cyan);
-    font-size: 0.7rem;
-  }
-
-  /* K-ESSENCE SECTION */
-  .bridge-block {
-    background: rgba(0,255,231,0.03);
-    border: 1px solid rgba(0,255,231,0.12);
     padding: 2.5rem;
-    margin: 2rem 0;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  .bridge-title {
-    font-family: var(--head);
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--cyan);
-    margin-bottom: 1.2rem;
-  }
+  .use-card:hover { border-color: rgba(255,10,46,0.5); box-shadow: 0 0 25px rgba(255,10,46,0.08); }
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 3rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .use-label { font-family: var(--mono); font-size: 0.7rem; color: var(--red); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .use-title { font-family: var(--head); font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 1rem; }
+
+  .use-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .use-list li { font-size: 0.95rem; color: var(--text-dim); padding-left: 1.2rem; position: relative; }
+  .use-list li::before { content: '›'; position: absolute; left: 0; color: var(--red); }
+
+  /* INSTALL BLOCK */
+  .install-block {
+    background: #020305;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--cyan);
+    padding: 2rem 2.5rem;
     font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--text-dim);
-  }
-
-  .footer-logo {
-    font-family: var(--head);
-    font-weight: 900;
     font-size: 0.85rem;
-    color: var(--red);
-    letter-spacing: 0.2em;
-    text-shadow: 0 0 12px var(--red-glow);
+    line-height: 2;
+    margin-top: 2.5rem;
   }
 
+  .install-block .i-label { font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+  .install-block .i-line { color: var(--text-dim); display: block; }
+  .install-block .i-line .prompt { color: var(--red); }
+  .install-block .i-line .cmd-text { color: var(--text); }
+  .install-block .i-line .comment { color: #2a3040; }
+
+  /* GITHUB LINK */
+  .github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid rgba(0,255,231,0.3);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    margin-top: 2rem;
+    transition: all 0.25s;
+  }
+  .github-link:hover { border-color: var(--cyan); box-shadow: 0 0 20px var(--cyan-glow); }
+
+  footer { border-top: 1px solid var(--border); padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim); }
+  .footer-logo { font-family: var(--head); font-weight: 900; font-size: 0.85rem; color: var(--red); letter-spacing: 0.2em; text-shadow: 0 0 12px var(--red-glow); }
   .footer-links { display: flex; gap: 2rem; }
   .footer-links a { color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cyan); }
 
-  /* RESPONSIVE */
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
-    .content-wrap { padding: 0 1.5rem; }
+    .content-wrap, .demo-wrap { padding: 0 1.5rem; }
     .hero { padding: 3rem 1.5rem; }
     .stats-bar { grid-template-columns: repeat(2, 1fr); }
-    .path-card.featured { grid-column: span 1; }
-    .paths-grid { grid-template-columns: 1fr; }
-    .phase { grid-template-columns: 80px 1fr; gap: 1rem; }
-    .tl-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .cmd-grid { grid-template-columns: 1fr; }
+    .arch-flow { grid-template-columns: repeat(2, 1fr); }
+    .use-grid { grid-template-columns: 1fr; }
+    .hero-meta { gap: 1.5rem; }
     footer { flex-direction: column; gap: 1.5rem; text-align: center; }
   }
 </style>
@@ -627,15 +446,16 @@
 
 <div class="grid-bg"></div>
 
-<!-- NAV -->
 <nav>
-  <a href="../index.html" class="nav-logo">CLUSTER Z<span> / RESEARCH</span></a>
+  <a href="../index.html" class="nav-logo">REDSTORM<span> // RESEARCH</span></a>
   <ul class="nav-links">
     <li><a href="../index.html#capabilities">Capabilities</a></li>
     <li><a href="../index.html#how">Process</a></li>
     <li><a href="../index.html#segments">Who We Serve</a></li>
+    <li><a href="../index.html#engagements">Engagements</a></li>
     <li><a href="../index.html#about">About</a></li>
-    <li><a href="index.html" class="active">Drone Activity</a></li>
+    <li><a href="index.html" class="active">Red-Agent</a></li>
+    <li><a href="../archive/">Archive</a></li>
     <li><a href="../index.html#contact">Contact</a></li>
   </ul>
   <a href="../index.html#contact" class="nav-cta"><span>Request Brief</span></a>
@@ -643,179 +463,271 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="classify-tag">SENSITIVE // INTERNAL ANALYSIS // RSR-2026-0315</div>
-  <div class="hero-eyebrow">Threat Intelligence Assessment · Barksdale AFB · March 9–15, 2026</div>
+  <div class="classify-tag">TOOL RELEASE // OFFENSIVE SECURITY // v1.0.0</div>
+  <div class="hero-eyebrow">Red Team Intelligence · Proxy Operations · Open Source</div>
   <h1 class="hero-title">
-    <span class="accent">Barksdale AFB</span><br>
-    <span class="accent2">Drone Incursion</span> Series
+    <span class="accent">RED-AGENT</span>
+    <span class="accent2">AI-Powered Proxy Command Center</span>
   </h1>
   <p class="hero-sub">
-    A sustained, multi-night state-level intelligence-gathering campaign against one of the United States' most sensitive strategic installations. Seven days. Twelve to fifteen drones per wave. Nuclear-capable B-52H Stratofortresses in the target zone.
+    Natural language interface for proxy discovery, chain building, security auditing, and Tor routing. Stop managing configs manually — tell it what you need and it executes.
   </p>
   <div class="hero-meta">
-    <div><span>REPORT:</span>RSR-2026-0315</div>
-    <div><span>DATE:</span>15 March 2026</div>
-    <div><span>ANALYST:</span>Red Storm Research</div>
-    <div><span>CLASS:</span>SENSITIVE // INTERNAL</div>
+    <div><span>REPO:</span>Insider77Circle/Red-Agent</div>
+    <div><span>LANG:</span>Python 3.11+</div>
+    <div><span>LICENSE:</span>MIT</div>
+    <div><span>RELEASE:</span>v1.0.0 — Mar 2026</div>
+  </div>
+  <div class="hero-actions">
+    <a href="https://github.com/Insider77Circle/Red-Agent" class="btn-primary" target="_blank" rel="noopener">View on GitHub</a>
+    <a href="#capabilities" class="btn-secondary">Explore Capabilities</a>
   </div>
 </section>
 
-<!-- STATS BAR -->
+<!-- STATS -->
 <div class="stats-bar">
-  <div class="stat-item">
-    <span class="stat-num">7</span>
-    <div class="stat-label">Day Campaign Window</div>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">12–15</span>
-    <div class="stat-label">Drones Per Wave</div>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">4hrs</span>
-    <div class="stat-label">Loiter Time Per Incursion</div>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">CHARLIE</span>
-    <div class="stat-label">FPCON Level Reached</div>
+  <div class="stat-item"><span class="stat-num">NL</span><div class="stat-label">Natural Language Interface</div></div>
+  <div class="stat-item"><span class="stat-num">5</span><div class="stat-label">Core Modules</div></div>
+  <div class="stat-item"><span class="stat-num">3</span><div class="stat-label">Chain Types</div></div>
+  <div class="stat-item"><span class="stat-num">TOR</span><div class="stat-label">Native Tor Support</div></div>
+</div>
+
+<!-- DEMO -->
+<div class="demo-section">
+  <div class="demo-wrap">
+    <div class="section-tag">Live Demo</div>
+    <h2 class="section-title"><span class="hl2">Red-Agent</span> In Action</h2>
+    <p style="color:var(--text-dim); font-family:var(--mono); font-size:0.85rem; letter-spacing:0.1em;">Natural language → proxy chain → security audit. No manual configuration required.</p>
+    <div class="demo-container">
+      <div class="demo-bar">
+        <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+        <span class="demo-title">RED-AGENT // PROXY COMMAND CENTER v1.0.0</span>
+      </div>
+      <img src="https://raw.githubusercontent.com/Insider77Circle/Red-Agent/main/assets/demo.gif" alt="Red-Agent demo — natural language proxy management" loading="lazy">
+    </div>
   </div>
 </div>
 
-<!-- SECTION I: INCIDENT SUMMARY -->
-<section class="section" id="summary">
+<!-- WHAT IT IS -->
+<section class="section" id="overview">
   <div class="content-wrap">
     <div class="section-tag">Section I</div>
-    <h2 class="section-title"><span class="hl">Incident</span> Summary</h2>
+    <h2 class="section-title">What Is <span class="hl">Red-Agent</span></h2>
 
-    <p>Between March 9 and March 15, 2026, Barksdale Air Force Base in Shreveport, Louisiana was subjected to a series of coordinated drone incursions. The operation was not a single event — it was a <strong>sustained, multi-night intelligence-gathering campaign</strong> conducted against one of the United States' most sensitive strategic installations.</p>
+    <p>Red-Agent is an AI-powered proxy management system built for red teams, penetration testers, and bug bounty hunters. It wraps the entire proxy workflow — discovery, validation, chaining, security auditing, and Tor integration — behind a <strong>conversational natural language interface</strong> powered by DeepSeek AI.</p>
 
-    <p>Swarms of 12 to 15 drones appeared over the installation across multiple nights, each loitering over the base for approximately four hours per incursion. Critically, the drones flew directly over the most sensitive areas of the installation — including the main flight line where nuclear-capable B-52H Stratofortress bombers are housed and maintained.</p>
+    <p>Traditional proxy management requires juggling multiple tools, manual configuration files, and brittle automation scripts. Red-Agent replaces all of it. You describe your objective in plain English — "Find 50 elite proxies from Europe and check for DNS leaks" — and the agent handles every step of execution autonomously, maintaining context across your entire session.</p>
 
-    <p>The Air Force response was immediate and severe. A shelter-in-place order was issued for base personnel. The installation's Force Protection Condition was elevated to "Charlie" — indicating a credible threat to the installation. A multi-agency investigation was launched with FBI involvement.</p>
-
-    <div class="callout">
-      <div class="callout-label">Key Incident Facts</div>
-      <table class="detect-table" style="margin:0.8rem 0 0;">
-        <thead>
-          <tr><th>Parameter</th><th>Detail</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Event location</td><td class="hl">Barksdale AFB, Shreveport, Louisiana</td></tr>
-          <tr><td>Campaign window</td><td class="hl">March 9 – 15, 2026 (7 days)</td></tr>
-          <tr><td>Swarm size</td><td class="hl">12 to 15 drones per wave</td></tr>
-          <tr><td>Loiter time</td><td class="hl">Approximately 4 hours per incursion</td></tr>
-          <tr><td>Target areas</td><td class="hl">Main flight line — nuclear-capable B-52H Stratofortresses</td></tr>
-          <tr><td>Official response</td><td class="hl">Shelter-in-place; FPCON elevated to Charlie; FBI investigation launched</td></tr>
-        </tbody>
-      </table>
+    <div class="callout cyan">
+      <div class="callout-label">Why This Matters for Red Teams</div>
+      Proxy infrastructure is foundational to anonymous reconnaissance, C2 communication, and rate limit evasion. Managing it manually introduces friction, inconsistency, and operational security gaps. Red-Agent closes those gaps by providing a <strong>context-aware command layer</strong> that understands intent, verifies infrastructure before use, and maintains operational hygiene automatically.
     </div>
   </div>
 </section>
 
-<!-- SECTION II: CAPABILITIES & STRATEGIC INTENT -->
+<!-- CAPABILITIES -->
 <section class="section" id="capabilities">
   <div class="content-wrap">
     <div class="section-tag">Section II</div>
-    <h2 class="section-title">Capabilities &amp; <span class="hl2">Strategic Intent</span></h2>
+    <h2 class="section-title">Core <span class="hl2">Capabilities</span></h2>
+    <p>Five integrated modules covering the complete proxy operations lifecycle — from initial discovery through security validation and proxychains integration.</p>
 
-    <p>The drones observed over Barksdale were not hobbyist hardware. Signal analysis confirmed non-commercial control characteristics, long-range control links, and active resistance to standard military jamming protocols. This level of technical sophistication — combined with the operational discipline to sustain a week-long surveillance campaign near a secure military installation — <strong>strongly indicates a state-level actor.</strong></p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <span class="cap-icon">// 01 — NATURAL LANGUAGE INTERFACE</span>
+        <div class="cap-title">Conversational Command Layer</div>
+        <p class="cap-desc">Powered by DeepSeek AI, Red-Agent understands intent rather than syntax. Issue commands in plain English — it maintains full conversation history across your session so context carries forward automatically. Rich terminal UI with formatted panels and structured output.</p>
+        <div class="cap-tags"><span class="tag cyan">DeepSeek AI</span><span class="tag">Context Aware</span><span class="tag">Rich Terminal UI</span></div>
+      </div>
 
-    <table class="detect-table">
-      <thead>
-        <tr>
-          <th>Capability</th>
-          <th>Indicator</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Signal sophistication</td><td>Non-commercial control characteristics confirmed</td><td class="hl">95/100</td></tr>
-        <tr><td>Jamming resistance</td><td>Active resistance to standard military jamming</td><td class="hl">90/100</td></tr>
-        <tr><td>Operational security</td><td>7-day sustained multi-night operation</td><td class="hl">88/100</td></tr>
-        <tr><td>ISR sensor capability</td><td>High-resolution imaging payload suspected</td><td class="hl">82/100</td></tr>
-        <tr><td>Persistence / loiter time</td><td>~4 hours per incursion, repeated nightly</td><td class="hl">78/100</td></tr>
-      </tbody>
-    </table>
+      <div class="cap-card">
+        <span class="cap-icon">// 02 — PROXY DISCOVERY &amp; VALIDATION</span>
+        <div class="cap-title">Complete Proxy Lifecycle Management</div>
+        <p class="cap-desc">Automated discovery from multiple sources including ProxyScrape API and Geonode API. Every proxy is actively verified before use — Red-Agent never gives you dead infrastructure. Continuous pool maintenance with automatic removal of failed proxies and health monitoring throughout your session.</p>
+        <div class="cap-tags"><span class="tag red">ProxyScrape</span><span class="tag red">Geonode</span><span class="tag">Auto-Verify</span><span class="tag">Pool Health</span></div>
+      </div>
 
-    <div class="callout">
-      <div class="callout-label">The Deliberate Visibility Tactic</div>
-      The most analytically significant detail of this operation is what the drones did <em>not</em> do: they did not attempt stealth. The drones flew with their lights on throughout each incursion. This was not a tradecraft failure — it was a <strong>deliberate intelligence collection strategy.</strong> By making themselves conspicuous, the operators were able to observe and record the base's entire response chain in real time: security force reaction times, communication patterns, emergency procedures, and the public statements of base officials. The base's response to the threat became as valuable to the adversary as any sensor data collected by the drones themselves.
-    </div>
+      <div class="cap-card">
+        <span class="cap-icon">// 03 — SECURITY AUDITING</span>
+        <div class="cap-title">Advanced Proxy Security Verification</div>
+        <p class="cap-desc">Four-layer security audit pipeline running in parallel: <strong>DNS leak detection</strong> to confirm real IP protection, <strong>TLS interception detection</strong> to identify potential MITM proxy behaviour, <strong>content injection scanning</strong> to catch proxies that modify HTTP responses, and <strong>anonymity classification</strong> — transparent, anonymous, or elite tier.</p>
+        <div class="cap-tags"><span class="tag red">DNS Leak</span><span class="tag red">TLS Intercept</span><span class="tag red">Content Injection</span><span class="tag cyan">Anonymity Class</span></div>
+      </div>
 
-    <div class="callout cyan">
-      <div class="callout-label">Primary Objective: Digital Twin Creation</div>
-      The primary strategic objective of this operation was almost certainly the creation of a <strong>high-resolution digital twin</strong> of the Barksdale installation. Using LiDAR, photogrammetric sensors, or other advanced imaging payloads, the drone swarms would have been collecting precise three-dimensional data across the installation during each loiter period. This data enables precise targeting of critical infrastructure — weapon storage bunkers, hangar dimensions, fuel lines, command nodes — and provides actionable mission-planning capability for a future strike, infiltration, or sabotage operation. Combined with patrol route observation, a complete operational picture of the base's defensive architecture could be assembled over the course of the week.
-    </div>
+      <div class="cap-card">
+        <span class="cap-icon">// 04 — CHAIN BUILDING</span>
+        <div class="cap-title">Multi-Hop Routing Architecture</div>
+        <p class="cap-desc">Build sophisticated multi-hop proxy chains routing traffic through sequential nodes across multiple geographic locations. Three chain modes: <strong>strict</strong> (fail if any proxy fails), <strong>dynamic</strong> (skip dead proxies automatically), and <strong>random</strong> (randomize selection per connection). Generates ready-to-use proxychains configuration files for nmap, curl, and any other tool that supports them.</p>
+        <div class="cap-tags"><span class="tag">Strict Chain</span><span class="tag">Dynamic Chain</span><span class="tag">Random Chain</span><span class="tag cyan">proxychains Config</span></div>
+      </div>
 
-    <div class="callout cyan">
-      <div class="callout-label">Operational Context</div>
-      The timing of the incursion campaign carries additional analytical weight. The campaign commenced shortly after the initiation of <strong>Operation Epic Fury</strong>, a major US military operation. This correlation suggests the Barksdale incursions were not opportunistic — they were a <strong>reactive intelligence collection mission</strong> by a peer adversary assessing US strategic posture and nuclear readiness at a directly relevant installation during a period of elevated operational tempo.
+      <div class="cap-card">
+        <span class="cap-icon">// 05 — TOR INTEGRATION</span>
+        <div class="cap-title">Native Tor Network Support</div>
+        <p class="cap-desc">SOCKS5 integration with the Tor network with automatic verification via the Tor Project API. Use Tor as a standalone anonymization layer or integrate it as the final hop in a multi-proxy chain — routing traffic through your proxy infrastructure before exiting through Tor for maximum anonymization depth.</p>
+        <div class="cap-tags"><span class="tag cyan">SOCKS5</span><span class="tag">Tor Verification</span><span class="tag">Final-Hop Mode</span><span class="tag red">Maximum Anon</span></div>
+      </div>
+
+      <div class="cap-card">
+        <span class="cap-icon">// 06 — OBSERVABILITY</span>
+        <div class="cap-title">Logging, Metrics &amp; Persistence</div>
+        <p class="cap-desc">Full observability layer with structured logging and operational metrics. Proxy pool state is persisted to disk so your verified infrastructure survives session restarts. Report generation outputs structured summaries of pool health, audit findings, and chain performance for documentation and after-action review.</p>
+        <div class="cap-tags"><span class="tag">Structured Logs</span><span class="tag">Metrics</span><span class="tag cyan">Pool Persistence</span><span class="tag">Report Gen</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- SECTION III: LAUNCH & CONTROL ANALYSIS -->
-<section class="section" id="launch-control">
+<!-- ARCHITECTURE -->
+<section class="section" id="architecture">
   <div class="content-wrap">
     <div class="section-tag">Section III</div>
-    <h2 class="section-title">Launch &amp; <span class="hl">Control</span> Analysis</h2>
+    <h2 class="section-title">System <span class="hl">Architecture</span></h2>
+    <p>Red-Agent flows from natural language input through the DeepSeek AI layer into a unified tool registry, dispatching to five specialized subsystems that operate independently and report back to the agent context.</p>
 
-    <p>Identifying the launch and control methodology is critical to understanding both the adversary's operational sophistication and the practical feasibility of future interdiction. Three primary scenarios were assessed.</p>
-
-    <div class="callout">
-      <div class="callout-label">Scenarios Ruled Out</div>
-      Fixed launch sites (residential or commercial buildings) were assessed and eliminated. A stationary launch point operating over a multi-day window near a federal installation would be trivially identified through signals triangulation by either law enforcement or organic military intelligence assets. Similarly, a single stationary vehicle — while theoretically capable of housing drone launch equipment — would present unacceptable exposure risk during a sustained, multi-night operation near an Air Force security perimeter.
-    </div>
-
-    <div class="section-tag" style="margin-top:3rem;">Most Probable Scenario</div>
-    <h3 class="section-title"><span class="hl2">Hybrid C2 / LRT Operation</span></h3>
-
-    <p>The operational pattern most consistent with the observed evidence is a compartmentalized hybrid operation running two distinct cells simultaneously.</p>
-
-    <div class="phases">
-      <div class="phase">
-        <div class="phase-id" style="font-size:1.1rem; opacity:1; color:var(--red);">C2</div>
-        <div class="phase-content">
-          <div class="phase-title">Mobile Command &amp; Control Node</div>
-          <div class="phase-desc">Specialized vehicle (van or RV) in constant motion on the surrounding road network, miles from the base. Never stationary — immune to triangulation. Houses operators and advanced control equipment. High-value assets, collected intelligence data, and control hardware are never exposed to interdiction risk associated with the launch site.</div>
-          <div class="phase-meta">
-            <div><span class="pval">TYPE:</span>Specialized vehicle</div>
-            <div><span class="pval">POSTURE:</span>Constant motion</div>
-            <div><span class="pval">EXPOSURE:</span>Near-zero interdiction risk</div>
-          </div>
-        </div>
+    <div class="arch-flow">
+      <div class="arch-node">
+        <span class="arch-icon">// INPUT</span>
+        <div class="arch-title">Natural Language</div>
+        <p class="arch-desc">User intent in plain English — context preserved across session</p>
       </div>
-
-      <div class="phase">
-        <div class="phase-id" style="font-size:1.1rem; opacity:1; color:var(--cyan);">LRT</div>
-        <div class="phase-content">
-          <div class="phase-title">Launch &amp; Recovery Team</div>
-          <div class="phase-desc">Small ground team transporting drone swarms to concealed rural launch sites each night — wooded areas, swampland, or farmland common to the Shreveport region. Launches the swarm, which links to the distant C2 node. Even if the LRT were compromised during a launch window, the primary intelligence-gathering capability and its personnel would remain secure and operational.</div>
-          <div class="phase-meta">
-            <div><span class="pval">SITES:</span>Concealed rural locations</div>
-            <div><span class="pval">TERRAIN:</span>Wooded / swampland</div>
-            <div><span class="pval">FUNCTION:</span>Expendable launch asset</div>
-          </div>
-        </div>
+      <div class="arch-node">
+        <span class="arch-icon">// AI LAYER</span>
+        <div class="arch-title">DeepSeek AI</div>
+        <p class="arch-desc">Intent parsing, tool selection, context management</p>
+      </div>
+      <div class="arch-node">
+        <span class="arch-icon">// REGISTRY</span>
+        <div class="arch-title">Tool Registry</div>
+        <p class="arch-desc">Routes commands to appropriate subsystem modules</p>
+      </div>
+      <div class="arch-node">
+        <span class="arch-icon">// OUTPUT</span>
+        <div class="arch-title">Execution</div>
+        <p class="arch-desc">Proxy pool, chains, audits, configs, reports</p>
       </div>
     </div>
 
-    <div class="callout cyan" style="margin-top:2.5rem;">
-      <div class="callout-label">Analytical Assessment</div>
-      This operational pattern reflects <strong>professional, doctrine-based intelligence tradecraft</strong>. The deliberate separation of high-value assets from exposure risk, sustained multi-night operational tempo, and the sophistication of the drone platforms themselves are collectively inconsistent with criminal, commercial, or non-state actor activity. The indicators are consistent with a <strong>state-sponsored collection operation</strong> executed against a nuclear-relevant US military installation during a period of elevated strategic interest.
+    <div class="install-block" style="margin-top:3rem;">
+      <div class="i-label">// Quick Start</div>
+      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">git clone https://github.com/Insider77Circle/Red-Agent.git</span></span>
+      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">cd Red-Agent && pip install -r requirements.txt</span></span>
+      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">cp .env.example .env</span> <span class="comment">  # add your DeepSeek API key</span></span>
+      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">python main.py</span></span>
+      <span class="i-line" style="color:var(--cyan); margin-top:0.5rem;"><span class="prompt">  </span><span class="cmd-text">Red-Agent &gt; Find me fast proxies and check for DNS leaks</span></span>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- COMMAND EXAMPLES -->
+<section class="section" id="commands">
+  <div class="content-wrap">
+    <div class="section-tag">Section IV</div>
+    <h2 class="section-title">Command <span class="hl2">Examples</span></h2>
+    <p>Red-Agent understands natural language across all operational categories. No flags, no syntax to memorize.</p>
+
+    <div class="cmd-grid">
+      <div class="cmd-block">
+        <div class="cmd-label">// Discovery &amp; Management</div>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Find 50 elite proxies from Europe"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Remove dead proxies from pool"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Show me only anonymous proxies"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Add proxy 192.168.1.1:8080"</span></span>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd-label">// Chain Building</div>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Build a 3-hop chain US → DE → FR"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Create rotation chain, fastest proxies"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Generate proxychains config for nmap"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Add Tor as final hop to current chain"</span></span>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd-label">// Security Auditing</div>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Run full security audit on all proxies"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Check for DNS leaks on elite proxies"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Test chain for TLS interception"</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Scan for content injection on pool"</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="section" id="usecases">
+  <div class="content-wrap">
+    <div class="section-tag">Section V</div>
+    <h2 class="section-title">Operational <span class="hl">Use Cases</span></h2>
+
+    <div class="use-grid">
+      <div class="use-card">
+        <div class="use-label">// Red Teams</div>
+        <div class="use-title">Penetration Testers</div>
+        <ul class="use-list">
+          <li>Anonymous reconnaissance operations</li>
+          <li>Geographic testing from specific regions</li>
+          <li>Rate limit evasion during enumeration</li>
+          <li>C2 communication infrastructure</li>
+          <li>Data exfiltration routing</li>
+          <li>nmap scanning through proxy chains</li>
+        </ul>
+      </div>
+      <div class="use-card">
+        <div class="use-label">// Blue Teams</div>
+        <div class="use-title">Defensive Operations</div>
+        <ul class="use-list">
+          <li>Safe interaction with malicious infrastructure</li>
+          <li>Honeypot management and monitoring</li>
+          <li>Control validation during incident response</li>
+          <li>Threat intelligence collection</li>
+          <li>Isolated investigation of suspicious IPs</li>
+        </ul>
+      </div>
+      <div class="use-card">
+        <div class="use-label">// Bug Bounty</div>
+        <div class="use-title">Bug Bounty Hunters</div>
+        <ul class="use-list">
+          <li>Scope-compliant anonymous testing</li>
+          <li>Identity protection during assessments</li>
+          <li>Persistence when blocked by target</li>
+          <li>Tool integration via proxychains</li>
+          <li>Geographic restriction bypass</li>
+        </ul>
+      </div>
+    </div>
+
+    <a href="https://github.com/Insider77Circle/Red-Agent" class="github-link" target="_blank" rel="noopener">
+      <span>// View Full Source on GitHub →</span>
+    </a>
+  </div>
+</section>
+
 <footer>
-  <div class="footer-logo">CLUSTER Z / RESEARCH</div>
+  <div class="footer-logo">REDSTORM // RESEARCH</div>
   <div class="footer-links">
     <a href="../index.html">Home</a>
-    <a href="../index.html#capabilities">Capabilities</a>
+    <a href="../archive/">Archive</a>
     <a href="../index.html#contact">Contact</a>
   </div>
-  <div>SENSITIVE // INTERNAL ANALYSIS // RED STORM RESEARCH // RSR-2026-0315</div>
+  <div>© 2026 REDSTORM RESEARCH — MIT LICENSE — INSIDER77CIRCLE</div>
 </footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.cap-card, .use-card, .cmd-block, .arch-node').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
 
 </body>
 </html>

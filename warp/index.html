@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RED-AGENT — AI-Powered Proxy Command Center</title>
+<title>NEON-FORGE — Parallel Refusal-Geometry Research System</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -186,7 +186,7 @@
   .stat-num { font-family: var(--head); font-weight: 900; font-size: 2.2rem; color: var(--red); text-shadow: 0 0 20px var(--red-glow); display: block; }
   .stat-label { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.3rem; }
 
-  /* DEMO SECTION */
+  /* DEMO / ANIMATION SECTION */
   .demo-section {
     border-bottom: 1px solid var(--border);
     padding: 5rem 0;
@@ -219,6 +219,8 @@
     padding: 0.8rem 1.2rem;
     border-bottom: 1px solid rgba(255,10,46,0.1);
     background: rgba(255,10,46,0.03);
+    position: relative;
+    z-index: 2;
   }
 
   .t-dot { width: 8px; height: 8px; border-radius: 50%; }
@@ -227,12 +229,36 @@
   .t-dot:nth-child(3) { background: #27c93f; }
   .demo-title { font-family: var(--mono); color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.1em; margin-left: auto; text-transform: uppercase; }
 
-  .demo-container img {
+  #geometry-canvas {
     width: 100%;
-    height: auto;
+    height: 420px;
     display: block;
     position: relative;
     z-index: 1;
+    background: #020305;
+  }
+
+  .demo-legend {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 1rem 1.2rem;
+    border-top: 1px solid rgba(255,10,46,0.1);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+  }
+  .demo-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem; vertical-align: -1px; }
+  .demo-legend .lg-red i { background: var(--red); box-shadow: 0 0 8px var(--red-glow); }
+  .demo-legend .lg-cyan i { background: var(--cyan); box-shadow: 0 0 8px var(--cyan-glow); }
+  .demo-legend .lg-axis { color: var(--text); }
+  .demo-phase {
+    margin-left: auto;
+    color: var(--cyan);
   }
 
   /* CONTENT */
@@ -296,7 +322,65 @@
   .tag.red { border-color: var(--red-dim); color: var(--red); }
   .tag.cyan { border-color: var(--cyan-dim); color: var(--cyan); }
 
-  /* COMMAND EXAMPLES */
+  /* PIPELINE SEQUENCER — animation 2 */
+  .pipe-track {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 2.5rem;
+    position: relative;
+  }
+
+  .pipe-node {
+    background: var(--bg2);
+    padding: 2rem 1rem;
+    text-align: center;
+    position: relative;
+    animation: pipe-pulse 7.2s ease-in-out infinite;
+  }
+  .pipe-node:nth-child(1) { animation-delay: 0s; }
+  .pipe-node:nth-child(2) { animation-delay: 1.2s; }
+  .pipe-node:nth-child(3) { animation-delay: 2.4s; }
+  .pipe-node:nth-child(4) { animation-delay: 3.6s; }
+  .pipe-node:nth-child(5) { animation-delay: 4.8s; }
+  .pipe-node:nth-child(6) { animation-delay: 6.0s; }
+
+  @keyframes pipe-pulse {
+    0%, 83%, 100% {
+      background: var(--bg2);
+      box-shadow: inset 0 0 0 rgba(0,255,231,0);
+    }
+    8%, 16% {
+      background: rgba(0,255,231,0.08);
+      box-shadow: inset 0 0 30px rgba(0,255,231,0.15), inset 0 -2px 0 var(--cyan);
+    }
+  }
+
+  .pipe-node::after {
+    content: '→';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    color: var(--red);
+    font-size: 1rem;
+    z-index: 2;
+    background: var(--bg2);
+    padding: 0 0.3rem;
+  }
+  .pipe-node:last-child::after { display: none; }
+
+  .pipe-icon { font-family: var(--mono); font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.8rem; display: block; }
+  .pipe-title { font-family: var(--head); font-size: 0.85rem; font-weight: 700; color: var(--text); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .pipe-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+
+  .pipe-caption { font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; margin-top: 1rem; text-align: center; }
+  .pipe-caption span { color: var(--cyan); }
+
+  /* COMMAND / TERMINAL */
   .cmd-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -320,46 +404,6 @@
   .cmd-line .prompt { color: var(--red); }
   .cmd-line .cmd-text { color: var(--text); }
   .cmd-line .out { color: var(--cyan); }
-
-  /* ARCHITECTURE */
-  .arch-flow {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-top: 2.5rem;
-  }
-
-  .arch-node {
-    background: var(--bg2);
-    padding: 2rem 1.5rem;
-    text-align: center;
-    transition: background 0.2s;
-    position: relative;
-  }
-
-  .arch-node:hover { background: rgba(255,10,46,0.03); }
-
-  .arch-node::after {
-    content: '→';
-    position: absolute;
-    right: -1px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: var(--mono);
-    color: var(--red);
-    font-size: 1rem;
-    z-index: 2;
-    background: var(--bg2);
-    padding: 0 0.3rem;
-  }
-
-  .arch-node:last-child::after { display: none; }
-
-  .arch-icon { font-family: var(--mono); font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.8rem; display: block; }
-  .arch-title { font-family: var(--head); font-size: 0.85rem; font-weight: 700; color: var(--text); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .arch-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
 
   /* USE CASES */
   .use-grid {
@@ -427,6 +471,11 @@
   .footer-links a { color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cyan); }
 
+  @media (prefers-reduced-motion: reduce) {
+    .pipe-node { animation: none; }
+    .classify-tag { animation: none; }
+  }
+
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
@@ -435,9 +484,12 @@
     .stats-bar { grid-template-columns: repeat(2, 1fr); }
     .cap-grid { grid-template-columns: 1fr; }
     .cmd-grid { grid-template-columns: 1fr; }
-    .arch-flow { grid-template-columns: repeat(2, 1fr); }
+    .pipe-track { grid-template-columns: repeat(2, 1fr); }
+    .pipe-node:nth-child(2n)::after { display: none; }
     .use-grid { grid-template-columns: 1fr; }
     .hero-meta { gap: 1.5rem; }
+    .demo-legend { gap: 1rem; }
+    .demo-phase { margin-left: 0; }
     footer { flex-direction: column; gap: 1.5rem; text-align: center; }
   }
 </style>
@@ -454,7 +506,7 @@
     <li><a href="../index.html#segments">Who We Serve</a></li>
     <li><a href="../index.html#engagements">Engagements</a></li>
     <li><a href="../index.html#about">About</a></li>
-    <li><a href="index.html" class="active">Tool Blog: Red-Agent</a></li>
+    <li><a href="index.html" class="active">Tool Blog: NEON-FORGE</a></li>
     <li><a href="../archive/">Archive</a></li>
     <li><a href="../index.html#contact">Contact</a></li>
   </ul>
@@ -463,47 +515,53 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="classify-tag">TOOL RELEASE // OFFENSIVE SECURITY // v1.0.0</div>
-  <div class="hero-eyebrow">Red Team Intelligence · Proxy Operations · Open Source</div>
+  <div class="classify-tag">TOOL BLOG // AI SAFETY RESEARCH // OPEN SOURCE</div>
+  <div class="hero-eyebrow">Refusal Geometry · Ablation · Capability Preservation</div>
   <h1 class="hero-title">
-    <span class="accent">RED-AGENT</span>
-    <span class="accent2">AI-Powered Proxy Command Center</span>
+    <span class="accent">NEON-FORGE</span>
+    <span class="accent2">Parallel Refusal-Geometry Research System</span>
   </h1>
   <p class="hero-sub">
-    Natural language interface for proxy discovery, chain building, security auditing, and Tor routing. Stop managing configs manually — tell it what you need and it executes.
+    One system that finds where a model says no, maps the geometry of that refusal, removes it under controlled conditions, and proves what survived. Built for researchers who want to understand refusal mechanisms — not just poke at them.
   </p>
   <div class="hero-meta">
-    <div><span>REPO:</span>Insider77Circle/Red-Agent</div>
-    <div><span>LANG:</span>Python 3.11+</div>
+    <div><span>REPO:</span>Insider77Circle/NEON-FORGE</div>
+    <div><span>LANG:</span>Python</div>
     <div><span>LICENSE:</span>MIT</div>
-    <div><span>RELEASE:</span>v1.0.0 — Mar 2026</div>
+    <div><span>BACKENDS:</span>Simulation + Real</div>
   </div>
   <div class="hero-actions">
-    <a href="https://github.com/Insider77Circle/Red-Agent" class="btn-primary" target="_blank" rel="noopener">View on GitHub</a>
+    <a href="https://github.com/Insider77Circle/NEON-FORGE" class="btn-primary" target="_blank" rel="noopener">View on GitHub</a>
     <a href="#capabilities" class="btn-secondary">Explore Capabilities</a>
   </div>
 </section>
 
 <!-- STATS -->
 <div class="stats-bar">
-  <div class="stat-item"><span class="stat-num">NL</span><div class="stat-label">Natural Language Interface</div></div>
-  <div class="stat-item"><span class="stat-num">5</span><div class="stat-label">Core Modules</div></div>
-  <div class="stat-item"><span class="stat-num">3</span><div class="stat-label">Chain Types</div></div>
-  <div class="stat-item"><span class="stat-num">TOR</span><div class="stat-label">Native Tor Support</div></div>
+  <div class="stat-item"><span class="stat-num">4</span><div class="stat-label">Integrated Components</div></div>
+  <div class="stat-item"><span class="stat-num">6</span><div class="stat-label">Pipeline Stages</div></div>
+  <div class="stat-item"><span class="stat-num">0.85</span><div class="stat-label">Capability Preservation Floor</div></div>
+  <div class="stat-item"><span class="stat-num">2</span><div class="stat-label">Backends: Sim + Real</div></div>
 </div>
 
-<!-- DEMO -->
+<!-- ANIMATION 1: REFUSAL GEOMETRY -->
 <div class="demo-section">
   <div class="demo-wrap">
-    <div class="section-tag">Live Demo</div>
-    <h2 class="section-title"><span class="hl2">Red-Agent</span> In Action</h2>
-    <p style="color:var(--text-dim); font-family:var(--mono); font-size:0.85rem; letter-spacing:0.1em;">Natural language → proxy chain → security audit. No manual configuration required.</p>
+    <div class="section-tag">Animation // Live Geometry</div>
+    <h2 class="section-title"><span class="hl2">Watch A Refusal</span> Get Mapped, Then Removed</h2>
+    <p style="color:var(--text-dim); font-family:var(--mono); font-size:0.85rem; letter-spacing:0.1em;">A simplified, animated view of the core idea: activations cluster along a refusal axis. Ablation projects that axis out — and the capability axis is left standing.</p>
     <div class="demo-container">
       <div class="demo-bar">
         <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
-        <span class="demo-title">RED-AGENT // PROXY COMMAND CENTER v1.0.0</span>
+        <span class="demo-title">NEON-FORGE // REFUSAL GEOMETRY — ANIMATED</span>
       </div>
-      <img src="https://raw.githubusercontent.com/Insider77Circle/Red-Agent/main/assets/demo.gif" alt="Red-Agent demo — natural language proxy management" loading="lazy">
+      <canvas id="geometry-canvas" width="1020" height="420" aria-label="Animated refusal geometry visualization"></canvas>
+      <div class="demo-legend">
+        <span class="lg-red"><i></i>Refusal-trigger activations</span>
+        <span class="lg-cyan"><i></i>Neutral activations</span>
+        <span class="lg-axis">— Refusal axis · — Capability axis</span>
+        <span class="demo-phase" id="geometry-phase">PHASE: PROBE</span>
+      </div>
     </div>
   </div>
 </div>
@@ -512,15 +570,20 @@
 <section class="section" id="overview">
   <div class="content-wrap">
     <div class="section-tag">Section I</div>
-    <h2 class="section-title">What Is <span class="hl">Red-Agent</span></h2>
+    <h2 class="section-title">What Is <span class="hl">NEON-FORGE</span></h2>
 
-    <p>Red-Agent is an AI-powered proxy management system built for red teams, penetration testers, and bug bounty hunters. It wraps the entire proxy workflow — discovery, validation, chaining, security auditing, and Tor integration — behind a <strong>conversational natural language interface</strong> powered by DeepSeek AI.</p>
+    <p>NEON-FORGE is a parallel AI reverse-engineering system. It orchestrates three upstream tools — <strong>REA</strong> for activation extraction, <strong>Heretic</strong> for directional ablation, and <strong>OBLITERATUS</strong> for refusal-geometry mapping and surgery — into a single pipeline with a hard rule: <strong>nothing ships without a capability check.</strong></p>
 
-    <p>Traditional proxy management requires juggling multiple tools, manual configuration files, and brittle automation scripts. Red-Agent replaces all of it. You describe your objective in plain English — "Find 50 elite proxies from Europe and check for DNS leaks" — and the agent handles every step of execution autonomously, maintaining context across your entire session.</p>
+    <p>Most refusal work stops at "it stopped refusing." NEON-FORGE treats that as the halfway point. Every run freezes a pre-surgery baseline, maps the refusal geometry, performs the ablation or surgery, re-probes, and then gates the result on measured capability preservation. If capability collapses, the run fails loudly instead of quietly producing a damaged model.</p>
 
     <div class="callout cyan">
-      <div class="callout-label">Why This Matters for Red Teams</div>
-      Proxy infrastructure is foundational to anonymous reconnaissance, C2 communication, and rate limit evasion. Managing it manually introduces friction, inconsistency, and operational security gaps. Red-Agent closes those gaps by providing a <strong>context-aware command layer</strong> that understands intent, verifies infrastructure before use, and maintains operational hygiene automatically.
+      <div class="callout-label">Why This Matters for AI Safety Research</div>
+      Refusal is a mechanism, not a mood. If you can measure the direction a model uses to refuse, watch it re-form in deeper layers, and verify what else changed when you removed it, you can build <strong>better, more precise safety behavior</strong> — and audit claims about it with evidence instead of vibes. NEON-FORGE is instrumentation for that work.
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Honest About Simulation</div>
+      NEON-FORGE ships with a deterministic simulation backend so the full pipeline runs anywhere with no model download. Simulation numbers are internally consistent but say nothing about any real model — they validate the machinery, not the science. Real backends shell out to the upstream CLIs and record their output verbatim. If a required CLI is missing, the run errors. It never silently falls back to simulation and pretends otherwise.
     </div>
   </div>
 </section>
@@ -530,124 +593,134 @@
   <div class="content-wrap">
     <div class="section-tag">Section II</div>
     <h2 class="section-title">Core <span class="hl2">Capabilities</span></h2>
-    <p>Five integrated modules covering the complete proxy operations lifecycle — from initial discovery through security validation and proxychains integration.</p>
+    <p>Four integrated components covering the full loop — from probe design through ablation, geometry surgery, and gated verification.</p>
 
     <div class="cap-grid">
       <div class="cap-card">
-        <span class="cap-icon">// 01 — NATURAL LANGUAGE INTERFACE</span>
-        <div class="cap-title">Conversational Command Layer</div>
-        <p class="cap-desc">Powered by DeepSeek AI, Red-Agent understands intent rather than syntax. Issue commands in plain English — it maintains full conversation history across your session so context carries forward automatically. Rich terminal UI with formatted panels and structured output.</p>
-        <div class="cap-tags"><span class="tag cyan">DeepSeek AI</span><span class="tag">Context Aware</span><span class="tag">Rich Terminal UI</span></div>
+        <span class="cap-icon">// 01 — REA_ENGINE</span>
+        <div class="cap-title">Probe Design &amp; Activation Extraction</div>
+        <p class="cap-desc">Deterministic synthetic probe sets across neutral, borderline, and refusal-trigger categories, each with a harm-score band. The extractor drives the probe set against the target, records activations, and validates reconstruction fidelity — dimension consistency, category coverage, and refusal/neutral centroid separation — before anything downstream trusts the data.</p>
+        <div class="cap-tags"><span class="tag cyan">Probe Sets</span><span class="tag">Activation Capture</span><span class="tag">Reconstruction Check</span></div>
       </div>
 
       <div class="cap-card">
-        <span class="cap-icon">// 02 — PROXY DISCOVERY &amp; VALIDATION</span>
-        <div class="cap-title">Complete Proxy Lifecycle Management</div>
-        <p class="cap-desc">Automated discovery from multiple sources including ProxyScrape API and Geonode API. Every proxy is actively verified before use — Red-Agent never gives you dead infrastructure. Continuous pool maintenance with automatic removal of failed proxies and health monitoring throughout your session.</p>
-        <div class="cap-tags"><span class="tag red">ProxyScrape</span><span class="tag red">Geonode</span><span class="tag">Auto-Verify</span><span class="tag">Pool Health</span></div>
+        <span class="cap-icon">// 02 — HERETIC_ADAPTER</span>
+        <div class="cap-title">Precision Directional Ablation</div>
+        <p class="cap-desc">Estimates the refusal direction by difference-of-means between refusal-trigger and neutral activations, then suppresses it by projection — and refits against the mutated target, iterating until the target refusal rate is met, separation collapses, or the pass budget is exhausted. Every pass is recorded, so the ablation is auditable step by step.</p>
+        <div class="cap-tags"><span class="tag red">Difference-of-Means</span><span class="tag red">Iterative Refit</span><span class="tag">Per-Pass History</span></div>
       </div>
 
       <div class="cap-card">
-        <span class="cap-icon">// 03 — SECURITY AUDITING</span>
-        <div class="cap-title">Advanced Proxy Security Verification</div>
-        <p class="cap-desc">Four-layer security audit pipeline running in parallel: <strong>DNS leak detection</strong> to confirm real IP protection, <strong>TLS interception detection</strong> to identify potential MITM proxy behaviour, <strong>content injection scanning</strong> to catch proxies that modify HTTP responses, and <strong>anonymity classification</strong> — transparent, anonymous, or elite tier.</p>
-        <div class="cap-tags"><span class="tag red">DNS Leak</span><span class="tag red">TLS Intercept</span><span class="tag red">Content Injection</span><span class="tag cyan">Anonymity Class</span></div>
+        <span class="cap-icon">// 03 — OBLITERATUS_ADAPTER</span>
+        <div class="cap-title">Refusal Geometry Mapping &amp; Surgery</div>
+        <p class="cap-desc">Maps the refusal subspace with centered-covariance PCA, keeps only axes aligned with the frozen pre-surgery refusal direction, and performs rank-k projection removal through the surgeon. Generates reversible steering vectors per geometry axis, so changes can be tested at runtime before any permanent weight modification is written to disk.</p>
+        <div class="cap-tags"><span class="tag red">PCA Subspace</span><span class="tag red">Rank-k Surgery</span><span class="tag cyan">Reversible Steering</span></div>
       </div>
 
       <div class="cap-card">
-        <span class="cap-icon">// 04 — CHAIN BUILDING</span>
-        <div class="cap-title">Multi-Hop Routing Architecture</div>
-        <p class="cap-desc">Build sophisticated multi-hop proxy chains routing traffic through sequential nodes across multiple geographic locations. Three chain modes: <strong>strict</strong> (fail if any proxy fails), <strong>dynamic</strong> (skip dead proxies automatically), and <strong>random</strong> (randomize selection per connection). Generates ready-to-use proxychains configuration files for nmap, curl, and any other tool that supports them.</p>
-        <div class="cap-tags"><span class="tag">Strict Chain</span><span class="tag">Dynamic Chain</span><span class="tag">Random Chain</span><span class="tag cyan">proxychains Config</span></div>
+        <span class="cap-icon">// 04 — MONITOR</span>
+        <div class="cap-title">Telemetry &amp; Capability Gating</div>
+        <p class="cap-desc">Every session event lands in an append-only log. The monitor freezes the pre-surgery baseline, re-probes after surgery, and fires explicit alert rules on recorded data only: capability preservation floor 0.85, activation drift ceiling 0.35, refusal reduction minimum 0.30, surgery rank cap 4, plus reversibility and convergence checks. Each run produces report.json, report.md, and a dashboard.</p>
+        <div class="cap-tags"><span class="tag cyan">Append-Only Telemetry</span><span class="tag cyan">Alert Gates</span><span class="tag">Run Reports</span></div>
       </div>
 
       <div class="cap-card">
-        <span class="cap-icon">// 05 — TOR INTEGRATION</span>
-        <div class="cap-title">Native Tor Network Support</div>
-        <p class="cap-desc">SOCKS5 integration with the Tor network with automatic verification via the Tor Project API. Use Tor as a standalone anonymization layer or integrate it as the final hop in a multi-proxy chain — routing traffic through your proxy infrastructure before exiting through Tor for maximum anonymization depth.</p>
-        <div class="cap-tags"><span class="tag cyan">SOCKS5</span><span class="tag">Tor Verification</span><span class="tag">Final-Hop Mode</span><span class="tag red">Maximum Anon</span></div>
+        <span class="cap-icon">// 05 — DUAL BACKENDS</span>
+        <div class="cap-title">Simulation for Development, Real for Evidence</div>
+        <p class="cap-desc">The simulation backend gives you a fast, deterministic loop for developing and testing the pipeline. Flip to the real backend and the same pipeline drives the upstream REA, Heretic, and OBLITERATUS CLIs against an actual model, recording output verbatim. Same stages, same gates, different evidentiary weight — and the system refuses to blur the two.</p>
+        <div class="cap-tags"><span class="tag">Sim Backend</span><span class="tag red">Real CLI Backend</span><span class="tag">No Silent Fallback</span></div>
       </div>
 
       <div class="cap-card">
-        <span class="cap-icon">// 06 — OBSERVABILITY</span>
-        <div class="cap-title">Logging, Metrics &amp; Persistence</div>
-        <p class="cap-desc">Full observability layer with structured logging and operational metrics. Proxy pool state is persisted to disk so your verified infrastructure survives session restarts. Report generation outputs structured summaries of pool health, audit findings, and chain performance for documentation and after-action review.</p>
-        <div class="cap-tags"><span class="tag">Structured Logs</span><span class="tag">Metrics</span><span class="tag cyan">Pool Persistence</span><span class="tag">Report Gen</span></div>
+        <span class="cap-icon">// 06 — REVERSIBILITY FIRST</span>
+        <div class="cap-title">Test Before You Commit</div>
+        <p class="cap-desc">Steering vectors apply and remove cleanly, and verify() re-probes after both steps to measure — not assert — reversibility against a reference recording. The pipeline is designed so the reversible experiment always precedes the permanent edit, and the gate results travel with the artifacts.</p>
+        <div class="cap-tags"><span class="tag cyan">Apply / Remove</span><span class="tag">Reversibility Measured</span><span class="tag">Gated Artifacts</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ARCHITECTURE -->
-<section class="section" id="architecture">
+<!-- ANIMATION 2: PIPELINE SEQUENCER -->
+<section class="section" id="pipeline">
   <div class="content-wrap">
-    <div class="section-tag">Section III</div>
-    <h2 class="section-title">System <span class="hl">Architecture</span></h2>
-    <p>Red-Agent flows from natural language input through the DeepSeek AI layer into a unified tool registry, dispatching to five specialized subsystems that operate independently and report back to the agent context.</p>
+    <div class="section-tag">Section III · Animation</div>
+    <h2 class="section-title">The Pipeline, <span class="hl">Stage By Stage</span></h2>
+    <p>Every NEON-FORGE run walks the same six stages. Watch them light up in order — the loop below runs the sequence continuously, the way a real session steps through it.</p>
 
-    <div class="arch-flow">
-      <div class="arch-node">
-        <span class="arch-icon">// INPUT</span>
-        <div class="arch-title">Natural Language</div>
-        <p class="arch-desc">User intent in plain English — context preserved across session</p>
+    <div class="pipe-track">
+      <div class="pipe-node">
+        <span class="pipe-icon">// 01</span>
+        <div class="pipe-title">Summon</div>
+        <p class="pipe-desc">Attach the target and freeze the pre-surgery refusal direction</p>
       </div>
-      <div class="arch-node">
-        <span class="arch-icon">// AI LAYER</span>
-        <div class="arch-title">DeepSeek AI</div>
-        <p class="arch-desc">Intent parsing, tool selection, context management</p>
+      <div class="pipe-node">
+        <span class="pipe-icon">// 02</span>
+        <div class="pipe-title">Probe</div>
+        <p class="pipe-desc">Drive the probe set, record activations across categories</p>
       </div>
-      <div class="arch-node">
-        <span class="arch-icon">// REGISTRY</span>
-        <div class="arch-title">Tool Registry</div>
-        <p class="arch-desc">Routes commands to appropriate subsystem modules</p>
+      <div class="pipe-node">
+        <span class="pipe-icon">// 03</span>
+        <div class="pipe-title">Distill</div>
+        <p class="pipe-desc">Map the refusal geometry and distill the subspace</p>
       </div>
-      <div class="arch-node">
-        <span class="arch-icon">// OUTPUT</span>
-        <div class="arch-title">Execution</div>
-        <p class="arch-desc">Proxy pool, chains, audits, configs, reports</p>
+      <div class="pipe-node">
+        <span class="pipe-icon">// 04</span>
+        <div class="pipe-title">Excise</div>
+        <p class="pipe-desc">Ablate or surgically remove the refusal directions</p>
+      </div>
+      <div class="pipe-node">
+        <span class="pipe-icon">// 05</span>
+        <div class="pipe-title">Verify</div>
+        <p class="pipe-desc">Re-probe, measure refusal reduction and drift</p>
+      </div>
+      <div class="pipe-node">
+        <span class="pipe-icon">// 06</span>
+        <div class="pipe-title">Rebirth</div>
+        <p class="pipe-desc">Gate on capability, snapshot artifacts, report</p>
+      </div>
+    </div>
+    <p class="pipe-caption">If any gate fails, the stage is documented as a result — <span>not hidden, not retried silently.</span></p>
+  </div>
+</section>
+
+<!-- SESSION OUTPUT -->
+<section class="section" id="session">
+  <div class="content-wrap">
+    <div class="section-tag">Section IV</div>
+    <h2 class="section-title">What A Run <span class="hl2">Looks Like</span></h2>
+    <p>Outputs are evidence, not vibes: per-pass ablation history, geometry snapshots, alert values that tripped each gate, and a dashboard per run.</p>
+
+    <div class="cmd-grid">
+      <div class="cmd-block">
+        <div class="cmd-label">// Ablation Passes</div>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">pass 1 — refusal rate 0.92 → 0.61</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">pass 2 — refusal rate 0.61 → 0.38</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">pass 3 — separation collapsed</span></span>
+        <span class="cmd-line"><span class="out">✓ STOP — target met, history recorded</span></span>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd-label">// Geometry &amp; Surgery</div>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">PCA axes aligned ≥ 0.35 kept</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">rank-k projection removed, rank ≤ 4</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">steering vectors generated per axis</span></span>
+        <span class="cmd-line"><span class="out">✓ reversibility measured, not assumed</span></span>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd-label">// Capability Gates</div>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">capability floor 0.85 — PASS</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">activation drift ≤ 0.35 — PASS</span></span>
+        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">refusal reduction ≥ 0.30 — PASS</span></span>
+        <span class="cmd-line"><span class="out">✓ artifacts → report.json / .md / dashboard</span></span>
       </div>
     </div>
 
     <div class="install-block" style="margin-top:3rem;">
       <div class="i-label">// Quick Start</div>
-      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">git clone https://github.com/Insider77Circle/Red-Agent.git</span></span>
-      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">cd Red-Agent && pip install -r requirements.txt</span></span>
-      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">cp .env.example .env</span> <span class="comment">  # add your DeepSeek API key</span></span>
-      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">python main.py</span></span>
-      <span class="i-line" style="color:var(--cyan); margin-top:0.5rem;"><span class="prompt">  </span><span class="cmd-text">Red-Agent &gt; Find me fast proxies and check for DNS leaks</span></span>
-    </div>
-  </div>
-</section>
-
-<!-- COMMAND EXAMPLES -->
-<section class="section" id="commands">
-  <div class="content-wrap">
-    <div class="section-tag">Section IV</div>
-    <h2 class="section-title">Command <span class="hl2">Examples</span></h2>
-    <p>Red-Agent understands natural language across all operational categories. No flags, no syntax to memorize.</p>
-
-    <div class="cmd-grid">
-      <div class="cmd-block">
-        <div class="cmd-label">// Discovery &amp; Management</div>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Find 50 elite proxies from Europe"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Remove dead proxies from pool"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Show me only anonymous proxies"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Add proxy 192.168.1.1:8080"</span></span>
-      </div>
-      <div class="cmd-block">
-        <div class="cmd-label">// Chain Building</div>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Build a 3-hop chain US → DE → FR"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Create rotation chain, fastest proxies"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Generate proxychains config for nmap"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Add Tor as final hop to current chain"</span></span>
-      </div>
-      <div class="cmd-block">
-        <div class="cmd-label">// Security Auditing</div>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Run full security audit on all proxies"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Check for DNS leaks on elite proxies"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Test chain for TLS interception"</span></span>
-        <span class="cmd-line"><span class="prompt">❯ </span><span class="cmd-text">"Scan for content injection on pool"</span></span>
-      </div>
+      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">git clone https://github.com/Insider77Circle/NEON-FORGE.git</span></span>
+      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">cd NEON-FORGE</span></span>
+      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">NEON_FORGE_BACKEND=real python -m neon_forge</span> <span class="comment">  # real backend shells out to upstream CLIs</span></span>
+      <span class="i-line"><span class="prompt">❯ </span><span class="cmd-text">NEON_FORGE_BACKEND=sim python -m neon_forge</span> <span class="comment">  # deterministic simulation, no model needed</span></span>
     </div>
   </div>
 </section>
@@ -656,46 +729,42 @@
 <section class="section" id="usecases">
   <div class="content-wrap">
     <div class="section-tag">Section V</div>
-    <h2 class="section-title">Operational <span class="hl">Use Cases</span></h2>
+    <h2 class="section-title">Who It's <span class="hl">For</span></h2>
 
     <div class="use-grid">
       <div class="use-card">
-        <div class="use-label">// Red Teams</div>
-        <div class="use-title">Penetration Testers</div>
+        <div class="use-label">// Researchers</div>
+        <div class="use-title">Interpretability Work</div>
         <ul class="use-list">
-          <li>Anonymous reconnaissance operations</li>
-          <li>Geographic testing from specific regions</li>
-          <li>Rate limit evasion during enumeration</li>
-          <li>C2 communication infrastructure</li>
-          <li>Data exfiltration routing</li>
-          <li>nmap scanning through proxy chains</li>
+          <li>Measure refusal directions, don't just infer them</li>
+          <li>Watch directions re-form across layers</li>
+          <li>Compare geometry across models and stages</li>
+          <li>Publish runs with auditable artifacts</li>
         </ul>
       </div>
       <div class="use-card">
-        <div class="use-label">// Blue Teams</div>
-        <div class="use-title">Defensive Operations</div>
+        <div class="use-label">// Safety Teams</div>
+        <div class="use-title">Capability-Aware Audits</div>
         <ul class="use-list">
-          <li>Safe interaction with malicious infrastructure</li>
-          <li>Honeypot management and monitoring</li>
-          <li>Control validation during incident response</li>
-          <li>Threat intelligence collection</li>
-          <li>Isolated investigation of suspicious IPs</li>
+          <li>Test whether a safety edit damaged the model</li>
+          <li>Gate modifications on measured capability</li>
+          <li>Verify reversibility before committing edits</li>
+          <li>Keep an append-only record of every session</li>
         </ul>
       </div>
       <div class="use-card">
-        <div class="use-label">// Bug Bounty</div>
-        <div class="use-title">Bug Bounty Hunters</div>
+        <div class="use-label">// Builders</div>
+        <div class="use-title">Steering &amp; Control</div>
         <ul class="use-list">
-          <li>Scope-compliant anonymous testing</li>
-          <li>Identity protection during assessments</li>
-          <li>Persistence when blocked by target</li>
-          <li>Tool integration via proxychains</li>
-          <li>Geographic restriction bypass</li>
+          <li>Prototype behavior changes reversibly</li>
+          <li>Separate semantic intent from refusal structure</li>
+          <li>Develop against the sim, verify on real models</li>
+          <li>Extend the pipeline stage by stage</li>
         </ul>
       </div>
     </div>
 
-    <a href="https://github.com/Insider77Circle/Red-Agent" class="github-link" target="_blank" rel="noopener">
+    <a href="https://github.com/Insider77Circle/NEON-FORGE" class="github-link" target="_blank" rel="noopener">
       <span>// View Full Source on GitHub →</span>
     </a>
   </div>
@@ -712,6 +781,7 @@
 </footer>
 
 <script>
+  // Scroll-reveal, same pattern as the rest of the site
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -721,12 +791,154 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.cap-card, .use-card, .cmd-block, .arch-node').forEach(el => {
+  document.querySelectorAll('.cap-card, .use-card, .cmd-block, .pipe-node').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     observer.observe(el);
   });
+
+  // Animation 1: refusal-geometry canvas.
+  // Simplified 2D view: neutral activations cluster along the capability
+  // axis, refusal-trigger activations cluster along the refusal axis.
+  // The loop runs PROBE -> ABLATE -> VERIFY, then resets.
+  (function () {
+    const canvas = document.getElementById('geometry-canvas');
+    const phaseEl = document.getElementById('geometry-phase');
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const cx = W * 0.5, cy = H * 0.55;
+    // Capability axis: mostly horizontal. Refusal axis: diagonal up-right.
+    const cap = { x: 1, y: -0.12 };
+    const ref = { x: 0.55, y: -0.83 };
+    const norm = v => { const l = Math.hypot(v.x, v.y) || 1; return { x: v.x / l, y: v.y / l }; };
+    const capN = norm(cap), refN = norm(ref);
+
+    function randn() {
+      let u = 0, v = 0;
+      while (u === 0) u = Math.random();
+      while (v === 0) v = Math.random();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    }
+
+    const pts = [];
+    for (let i = 0; i < 90; i++) {
+      const refusal = i < 45;
+      const along = 60 + Math.random() * 210;
+      const spread = randn() * 22;
+      const base = refusal
+        ? { x: cx + refN.x * along + capN.x * spread, y: cy + refN.y * along + capN.y * spread }
+        : { x: cx + capN.x * along + refN.x * spread, y: cy + capN.y * along + refN.y * spread };
+      pts.push({
+        refusal,
+        x0: base.x, y0: base.y,
+        // Ablated position: refusal component projected out, capability kept.
+        x1: refusal ? cx + capN.x * spread + capN.x * 90 + randn() * 14 : base.x,
+        y1: refusal ? cy + capN.y * spread + capN.y * 90 + randn() * 14 : base.y,
+        jx: (Math.random() - 0.5) * 2, jy: (Math.random() - 0.5) * 2,
+        r: 2.5 + Math.random() * 2.5
+      });
+    }
+
+    const PHASES = [
+      { name: 'PROBE', dur: 3400 },
+      { name: 'ABLATE', dur: 3400 },
+      { name: 'VERIFY', dur: 3000 }
+    ];
+    let start = performance.now();
+
+    function draw(t) {
+      const elapsed = t - start;
+      const cycle = PHASES.reduce((a, p) => a + p.dur, 0);
+      const ct = elapsed % cycle;
+      let acc = 0, phaseIdx = 0, phaseT = 0;
+      for (let i = 0; i < PHASES.length; i++) {
+        if (ct < acc + PHASES[i].dur) { phaseIdx = i; phaseT = (ct - acc) / PHASES[i].dur; break; }
+        acc += PHASES[i].dur;
+      }
+      const phase = PHASES[phaseIdx].name;
+      if (phaseEl) phaseEl.textContent = 'PHASE: ' + phase;
+
+      // Ablation progress: 0 during PROBE, 0->1 during ABLATE, 1 during VERIFY.
+      let k = 0;
+      if (phase === 'ABLATE') k = phaseT;
+      if (phase === 'VERIFY') k = 1;
+      const ease = k * k * (3 - 2 * k);
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(255,10,46,0.06)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y <= H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+      // Axes
+      const axisLen = 330;
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = 'rgba(0,255,231,0.55)';
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + capN.x * axisLen, cy + capN.y * axisLen);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(0,255,231,0.8)';
+      ctx.font = '12px monospace';
+      ctx.fillText('CAPABILITY AXIS', cx + capN.x * axisLen - 130, cy + capN.y * axisLen + 22);
+
+      ctx.strokeStyle = phase === 'PROBE' ? 'rgba(255,10,46,0.8)' : 'rgba(255,10,46,' + (0.8 - 0.55 * ease) + ')';
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + refN.x * axisLen, cy + refN.y * axisLen);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(255,10,46,0.9)';
+      ctx.fillText('REFUSAL AXIS', cx + refN.x * axisLen - 40, cy + refN.y * axisLen - 12);
+
+      // Ablation sweep line during ABLATE
+      if (phase === 'ABLATE') {
+        const sx = cx + refN.x * axisLen * ease;
+        const sy = cy + refN.y * axisLen * ease;
+        ctx.strokeStyle = 'rgba(0,255,231,0.9)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(sx - capN.y * 190, sy + capN.x * 190);
+        ctx.lineTo(sx + capN.y * 190, sy - capN.x * 190);
+        ctx.stroke();
+      }
+
+      // Points
+      pts.forEach((p, i) => {
+        const wob = reduced ? 0 : Math.sin(t / 900 + i) * 1.5;
+        const x = p.x0 + (p.x1 - p.x0) * ease + p.jx * wob;
+        const y = p.y0 + (p.y1 - p.y0) * ease + p.jy * wob;
+        ctx.beginPath();
+        ctx.arc(x, y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.refusal
+          ? 'rgba(255,10,46,' + (0.95 - 0.35 * ease) + ')'
+          : 'rgba(0,255,231,0.9)';
+        ctx.shadowColor = p.refusal ? 'rgba(255,10,46,0.8)' : 'rgba(0,255,231,0.8)';
+        ctx.shadowBlur = 6;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      // Origin marker
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fill();
+
+      if (!reduced) requestAnimationFrame(draw);
+    }
+
+    if (reduced) {
+      draw(performance.now());
+    } else {
+      requestAnimationFrame(draw);
+    }
+  })();
 </script>
 
 </body>
